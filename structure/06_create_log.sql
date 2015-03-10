@@ -4,4 +4,5 @@ CREATE TABLE Log (
 , CreatedAt timestamp
 , Level varchar(42)
 , Message varchar(100)
+, FOREIGN KEY (Id_Device) REFERENCES Device(Id_Device)
 , PRIMARY KEY (Id_Log))
