@@ -6,5 +6,5 @@ CREATE TABLE Person (
 , SurName varchar(42)
 , Id_InvoiceAddress int
 , Id_Address int NOT NULL
-, PRIMARY KEY (Id_Customer)
-, FOREIGN KEY (Id_Address) REFERENCES Address(Id_Person))
+, PRIMARY KEY (Id_Person)
+, FOREIGN KEY (Id_Address) REFERENCES Address(Id_Address))
