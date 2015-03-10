@@ -1,4 +1,3 @@
-
 -- Tabelle Customer wird erstellt mit Verknpüfung zur Adresse. (Rechnungsadresse und normale Adresse)
 CREATE TABLE Person (
   Id_Person int auto_increment

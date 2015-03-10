@@ -6,4 +6,4 @@ CREATE TABLE Credentials (
 , SNMP_Community varchar(42)
 , Plz int
 , Location varchar(42)
-, PRIMARY KEY (Id_Customer))
+, PRIMARY KEY (ID_Credentials))
