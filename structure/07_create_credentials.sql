@@ -1,6 +1,6 @@
 -- Tabelle Credentials wird erstellt.
 CREATE TABLE Credentials (
-  ID_Credentials int
+  ID_Credentials int auto_increment
 , UserName varchar(42)
 , Password varchar(42)
 , SNMP_Community varchar(42)
