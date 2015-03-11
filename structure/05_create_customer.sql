@@ -1,6 +1,6 @@
 -- Tabelle Customer wird erstellt mit Verknpüfung zur Adresse. (Rechnungsadresse und normale Adresse)
 CREATE TABLE Customer (
-  Id_Customer int auto_increment
+  Id_Customer int NOT NULL auto_increment
 , Name varchar(42)
 , Id_InvoiceAddress int
 , Id_Address int NOT NULL
