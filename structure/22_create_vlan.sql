@@ -16,7 +16,7 @@ CREATE TABLE VLAN (
 	Select: HEX(INET6_NTOA(RangeStartIP6))
     Insert: HEX(INET6_ATON('ffff::ff')) */
   RangeStartIP6 VARBINARY(16) NULL ,
-  RangeSubnetMask6 VARBINARY(16) NULL,
+  RangeLength6 unsigned int NULL,
   RangeDefaultGateway6 VARBINARY(16) NULL,
 
   PRIMARY KEY (ID_VLAN),
