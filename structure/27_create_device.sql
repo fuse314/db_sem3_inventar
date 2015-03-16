@@ -1,6 +1,5 @@
-use inventar;
-
-create table  if not exists Device(
+-- Tabelle Device wird erstellt mit Verknüpfung zu Location,DeviceType
+create table Device(
   ID_Device int auto_increment
   ,ID_DeviceType int Not Null
   ,ID_Location int Not Null
@@ -11,4 +10,5 @@ create table  if not exists Device(
   ,isPhysical boolean null
   ,Primary Key (ID_Device)
   ,Foreign Key (ID_Location) references Location (ID_Location)
- )
+  /* ,Foreign Key (ID_DeviceType) REFERENCES DeviceType(ID_DeviceType) */
+ );

@@ -1,3 +1,4 @@
+-- Tabelle Communication wird angelegt mit Verknüpfung auf Person,CommunicationType
 CREATE TABLE Communication(
   ID_Person INT NOT NULL,
   ID_CommunicationType INT NOT NULL,

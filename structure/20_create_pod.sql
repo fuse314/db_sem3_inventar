@@ -1,4 +1,4 @@
-
+-- Tabelle PointOfDelivery (POD) erstellen mit Verknüpfungen zu Customer, Person, Address
 CREATE TABLE POD (
   ID_Pod INT NOT NULL AUTO_INCREMENT,
   ID_Customer INT NOT NULL,

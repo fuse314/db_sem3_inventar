@@ -1,4 +1,4 @@
--- Tabelle Customer wird erstellt mit Verknpüfung zur Adresse. (Rechnungsadresse und normale Adresse)
+-- Tabelle (Kontakt-)Person wird erstellt mit Verknpüfung zur Adresse.
 CREATE TABLE Person (
   Id_Person int NOT NULL auto_increment
 , FirstName varchar(42)

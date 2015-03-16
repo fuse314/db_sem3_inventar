@@ -1,3 +1,4 @@
+-- Tabelle VLAN wird erstellt mit Verknüpfung zu Location
 CREATE TABLE VLAN (
   ID_Vlan INT NOT NULL AUTO_INCREMENT,
   ID_Location INT NOT NULL,

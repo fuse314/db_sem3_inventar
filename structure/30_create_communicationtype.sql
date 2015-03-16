@@ -1,3 +1,4 @@
+-- Tabelle CommunicationType wird angelegt
 CREATE TABLE CommunicationType(
   ID_CommunicationType INT NOT NULL AUTO_INCREMENT,
   Description VARCHAR(50) NOT NULL,

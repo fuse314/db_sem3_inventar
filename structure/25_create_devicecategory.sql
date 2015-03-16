@@ -1,3 +1,4 @@
+-- Tabelle DeviceCategory wird erstellt
 CREATE TABLE DeviceCategory (
   ID_DeviceCategory INT NOT NULL AUTO_INCREMENT,
   Description VARCHAR(100),
