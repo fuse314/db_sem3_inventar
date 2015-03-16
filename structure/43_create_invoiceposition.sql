@@ -4,6 +4,7 @@ create table InvoicePosition (
   ID_ServiceType int,
 
   amount decimal not null,
+  price decimal,
   description varchar(100),
 
   ID_NetworkInterfaceConnection int,

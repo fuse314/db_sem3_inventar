@@ -1,7 +1,7 @@
 create table Rate (
-  ID_Fare int auto_increment primary key,
-  ID_ServiceType int,
-  ID_Unit int,
+  ID_Rate int auto_increment primary key,
+  ID_ServiceType int not null,
+  ID_Unit int not null,
   PricePerUnit decimal,
   ValidFrom date not null,
   ValidTo date,
