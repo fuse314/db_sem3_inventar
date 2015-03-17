@@ -77,7 +77,7 @@ CREATE TABLE VLAN (
   
   /*IPV6:
 	Select: HEX(INET6_NTOA(RangeStartIP6))
-    Insert: HEX(INET6_ATON('ffff::ff')) */
+    Insert: INET6_ATON('ffff::ff') */
   RangeStartIP6 VARBINARY(16) NULL ,
   RangeLength6 int UNSIGNED NULL,
   RangeDefaultGateway6 VARBINARY(16) NULL,
@@ -107,10 +107,8 @@ create table Device(
   ID_Device int auto_increment
   ,ID_DeviceType int Not Null
   ,ID_Location int Not Null
-  ,Hostname varchar(500) null
-  ,IPv4_Adresse varchar(500) null
-  ,IPv6_Adresse varchar(500) null
-  ,SerialNumber varchar(500) null
+  ,Hostname varchar(100) null
+  ,SerialNumber varchar(100) null
   ,IsPhysical boolean null
   ,Primary Key (ID_Device)
   ,Foreign Key (ID_Location) references Location (ID_Location)
@@ -196,6 +194,8 @@ CREATE TABLE Networkinterface (
 , FullDuplex bool not null
 , Speed int not null
 , Physical bool not null
+, IPv4_Address int unsigned null
+, IPv6_Address VARBINARY(16) null
 , ID_Device int not null
 , FOREIGN KEY (ID_Device) REFERENCES Device(ID_Device)
 , PRIMARY KEY (ID_Networkinterface)
