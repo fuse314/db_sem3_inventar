@@ -4,32 +4,32 @@ use inventar;
 
 -- table address
 CREATE TABLE Address(
-  Id_Address int auto_increment
+  ID_Address int auto_increment
 , Street varchar(42)
 , StreetNumber varchar(8)
 , Plz int
 , Location varchar(42)
-, PRIMARY KEY(Id_Address)
+, PRIMARY KEY(ID_Address)
 );
 
 -- Tabelle Customer wird erstellt mit Verknpüfung zur Adresse. (Rechnungsadresse und normale Adresse)
 CREATE TABLE Customer (
-  Id_Customer int NOT NULL auto_increment
+  ID_Customer int NOT NULL auto_increment
 , Name varchar(42)
-, Id_InvoiceAddress int
-, Id_Address int NOT NULL
-, PRIMARY KEY (Id_Customer)
-, FOREIGN KEY (Id_InvoiceAddress) REFERENCES Address(Id_Address)
-, FOREIGN KEY (Id_Address) REFERENCES Address(Id_Address));
+, ID_InvoiceAddress int
+, ID_Address int NOT NULL
+, PRIMARY KEY (ID_Customer)
+, FOREIGN KEY (ID_InvoiceAddress) REFERENCES Address(ID_Address)
+, FOREIGN KEY (ID_Address) REFERENCES Address(ID_Address));
 
 -- Tabelle (Kontakt-)Person wird erstellt mit Verknpüfung zur Adresse.
 CREATE TABLE Person (
-  Id_Person int NOT NULL auto_increment
+  ID_Person int NOT NULL auto_increment
 , FirstName varchar(42)
 , SurName varchar(42)
-, Id_Address int NOT NULL
-, PRIMARY KEY (Id_Person)
-, FOREIGN KEY (Id_Address) REFERENCES Address(Id_Address));
+, ID_Address int NOT NULL
+, PRIMARY KEY (ID_Person)
+, FOREIGN KEY (ID_Address) REFERENCES Address(ID_Address));
 
 -- Tabelle PointOfDelivery (POD) erstellen mit Verknüpfungen zu Customer, Person, Address
 CREATE TABLE POD (
@@ -102,7 +102,7 @@ create table Device(
   ,IPv4_Adresse varchar(500) null
   ,IPv6_Adresse varchar(500) null
   ,SerialNumber varchar(500) null
-  ,isPhysical boolean null
+  ,IsPhysical boolean null
   ,Primary Key (ID_Device)
   ,Foreign Key (ID_Location) references Location (ID_Location)
   /* ,Foreign Key (ID_DeviceType) REFERENCES DeviceType(ID_DeviceType) */
@@ -121,11 +121,11 @@ CREATE TABLE Credential (
 
 -- Verbindungstabelle RelDeviceCredential wird erstellt mit Verknpüfung zum Device und Credentials.
 CREATE TABLE RelDeviceCredential (
-  Id_Device int NOT NULL
-, Id_Credential int NOT NULL
-, PRIMARY KEY (Id_Device, Id_Credential)
-, FOREIGN KEY (Id_Device) REFERENCES Device(Id_Device)
-, FOREIGN KEY (Id_Credential) REFERENCES Credential(Id_Credential)
+  ID_Device int NOT NULL
+, ID_Credential int NOT NULL
+, PRIMARY KEY (ID_Device, ID_Credential)
+, FOREIGN KEY (ID_Device) REFERENCES Device(ID_Device)
+, FOREIGN KEY (ID_Credential) REFERENCES Credential(ID_Credential)
 );
 
 -- Tabelle Networkinterface wird erstellt
@@ -134,9 +134,9 @@ CREATE TABLE Networkinterface (
 , FullDuplex bool not null
 , Speed int not null
 , Physical bool not null
-, Id_Device int not null
-, FOREIGN KEY (Id_Device) REFERENCES Device(Id_Device)
-, PRIMARY KEY (Id_Networkinterface)
+, ID_Device int not null
+, FOREIGN KEY (ID_Device) REFERENCES Device(ID_Device)
+, PRIMARY KEY (ID_Networkinterface)
 );
 
 -- Tabelle RelNetworkinterface wird erstellt mit Verknüpfung zu Networkinterface,Networkinterface
@@ -166,9 +166,9 @@ CREATE TABLE Log (
 , CreatedAt timestamp
 , Severity int
 , Message varchar(1000)
-, Id_Device int NOT NULL
-, FOREIGN KEY (Id_Device) REFERENCES Device(Id_Device)
-, PRIMARY KEY (Id_Log)
+, ID_Device int NOT NULL
+, FOREIGN KEY (ID_Device) REFERENCES Device(ID_Device)
+, PRIMARY KEY (ID_Log)
 );
 
 -- Tabelle CommunicationType wird angelegt
@@ -211,8 +211,8 @@ create table InvoicePosition (
   ID_Invoice int not null,
   ID_ServiceType int,
 
-  amount decimal not null,
-  description varchar(100),
+  Amount decimal not null,
+  Description varchar(100),
 
   ID_Networkinterface int,
 
@@ -223,8 +223,8 @@ create table InvoicePosition (
 
 create table Unit (
   ID_Unit int auto_increment primary key,
-  name varchar(100) not null,
-  abbreviation varchar(5) not null
+  Name varchar(100) not null,
+  Abbreviation varchar(5) not null
 );
 
 create table Fare (
@@ -240,7 +240,7 @@ create table Fare (
 create table Payment (
   ID_Payment int auto_increment primary key,
   ID_Customer int not null,
-  amount decimal not null,
-  paymentDate date not null,
+  Amount decimal not null,
+  PaymentDate date not null,
   foreign key (ID_Customer) references Customer(ID_Customer)
 );
