@@ -167,12 +167,14 @@ ID_Device int
 -- Tabelle Credential wird erstellt.
 CREATE TABLE Credential (
   ID_Credential int not null auto_increment
+, ID_Customer int not null
 , UserName varchar(42)
 , Password varchar(42)
 , SNMP_Community varchar(42)
 , Plz int
 , Location varchar(42)
 , PRIMARY KEY (ID_Credential)
+, Foreign Key (ID_Customer) REFERENCES Customer(ID_Customer)
 );
 
 -- Verbindungstabelle RelDeviceCredential wird erstellt mit Verknpüfung zum Device und Credentials.
