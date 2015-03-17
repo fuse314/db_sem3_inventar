@@ -5,10 +5,10 @@ use inventar;
 -- table address
 CREATE TABLE Address(
   Id_Address int auto_increment
-, Street varchar(42)
+, Street varchar(100)
 , StreetNumber varchar(8)
-, Plz varchar(42)
-, Location varchar(42)
+, Plz varchar(100)
+, Location varchar(100)
 , IsoCountry varchar(8)
 , PRIMARY KEY(Id_Address)
 );
@@ -16,7 +16,7 @@ CREATE TABLE Address(
 -- Tabelle Customer wird erstellt mit Verknpüfung zur Adresse. (Rechnungsadresse und normale Adresse)
 CREATE TABLE Customer (
   ID_Customer int NOT NULL auto_increment
-, Name varchar(42)
+, Name varchar(100)
 , ID_InvoiceAddress int
 , ID_Address int NOT NULL
 , PRIMARY KEY (ID_Customer)
@@ -26,8 +26,8 @@ CREATE TABLE Customer (
 -- Tabelle (Kontakt-)Person wird erstellt mit Verknpüfung zur Adresse.
 CREATE TABLE Person (
   ID_Person int NOT NULL auto_increment
-, FirstName varchar(42)
-, SurName varchar(42)
+, FirstName varchar(100)
+, SurName varchar(100)
 , ID_Address int NOT NULL
 , PRIMARY KEY (ID_Person)
 , FOREIGN KEY (ID_Address) REFERENCES Address(ID_Address));
@@ -120,13 +120,14 @@ create table Device(
 CREATE TABLE DeviceSwitch(
   ID_Device int
   ,Ports int
-  ,isPowerOverEthernetSupported boolean
+  ,isPoESupported boolean
   ,PRIMARY Key (ID_Device)
   ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
 CREATE TABLE DeviceRouter(
   ID_Device int
+
  ,Description varchar(100)
  ,PRIMARY Key(ID_Device)
  ,Foreign Key (ID_Device) references Device (ID_Device)
@@ -156,12 +157,16 @@ CREATE TABLE DevicePrinter(
   ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
-CREATE TABLE DeviceMachine(
+CREATE TABLE DeviceWorkstation(
   ID_Device int
-  ,Processors varchar(100)
-  ,RAM varchar(100)
-  ,StorageSize varchar(100)
-  ,GPU varchar(100)
+  ,
+  ,PRIMARY Key(ID_Device)
+  ,Foreign Key (ID_Device) references Device (ID_Device)
+);
+
+CREATE TABLE DeviceServer(
+  ID_Device int
+  
   ,PRIMARY Key(ID_Device)
   ,Foreign Key (ID_Device) references Device (ID_Device)
 );
@@ -170,11 +175,11 @@ CREATE TABLE DeviceMachine(
 CREATE TABLE Credential (
   ID_Credential int not null auto_increment
 , ID_Customer int not null
-, UserName varchar(42)
-, Password varchar(42)
-, SNMP_Community varchar(42)
+, UserName varchar(100)
+, Password varchar(100)
+, SNMP_Community varchar(100)
 , Plz int
-, Location varchar(42)
+, Location varchar(100)
 , PRIMARY KEY (ID_Credential)
 , Foreign Key (ID_Customer) REFERENCES Customer(ID_Customer)
 );
