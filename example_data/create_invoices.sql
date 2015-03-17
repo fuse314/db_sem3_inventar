@@ -27,4 +27,4 @@ values(1, 1, 3, 0.75, 'Fahrtweg zu Kunde'),
 (2, 1, 1, 2.5, 'Installation Gerät XYZ');
 
 insert into InvoicePosition(ID_InvoicePosition, ID_Invoice, ID_ServiceType, amount, description, price)
-(3, 1, 2, 1, 'Installation Gerät XYZ', 599.95);
+(3, 1, 2, 1, 'Gerät XYZ', 599.95);
