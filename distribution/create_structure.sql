@@ -172,8 +172,6 @@ CREATE TABLE Credential (
 , UserName varchar(100)
 , Password varchar(100)
 , SNMP_Community varchar(100)
-, Plz int
-, Location varchar(100)
 , PRIMARY KEY (ID_Credential)
 , Foreign Key (ID_Customer) REFERENCES Customer(ID_Customer)
 );
