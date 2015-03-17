@@ -4,12 +4,13 @@ use inventar;
 
 -- table address
 CREATE TABLE Address(
-  ID_Address int auto_increment
+  Id_Address int auto_increment
 , Street varchar(42)
 , StreetNumber varchar(8)
-, Plz int
+, Plz varchar(42)
 , Location varchar(42)
-, PRIMARY KEY(ID_Address)
+, IsoCountry varchar(8)
+, PRIMARY KEY(Id_Address)
 );
 
 -- Tabelle Customer wird erstellt mit Verknpüfung zur Adresse. (Rechnungsadresse und normale Adresse)
