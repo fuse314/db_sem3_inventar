@@ -78,7 +78,7 @@ CREATE TABLE VLAN (
 	Select: HEX(INET6_NTOA(RangeStartIP6))
     Insert: HEX(INET6_ATON('ffff::ff')) */
   RangeStartIP6 VARBINARY(16) NULL ,
-  RangeLength6 unsigned int NULL,
+  RangeLength6 int UNSIGNED NULL,
   RangeDefaultGateway6 VARBINARY(16) NULL,
 
   PRIMARY KEY (ID_VLAN),
@@ -89,9 +89,17 @@ CREATE TABLE VLAN (
 CREATE TABLE DeviceCategory (
   ID_DeviceCategory INT NOT NULL AUTO_INCREMENT,
   Description VARCHAR(100),
-  
   PRIMARY KEY (ID_DeviceCategory)
   );
+  
+CREATE TABLE DeviceType(
+ID_DeviceType int auto_increment
+,ID_DeviceCategory int not null
+,Manufacturer varchar(100)
+,ManufacturerNumber varchar(100)
+,PRIMARY KEY(ID_DeviceType)
+,Foreign Key (ID_DeviceCategory) references DeviceCategory (ID_DeviceCategory)
+);
 
 -- Tabelle Device wird erstellt mit Verknüpfung zu Location,DeviceType
 create table Device(
@@ -105,7 +113,7 @@ create table Device(
   ,IsPhysical boolean null
   ,Primary Key (ID_Device)
   ,Foreign Key (ID_Location) references Location (ID_Location)
-  /* ,Foreign Key (ID_DeviceType) REFERENCES DeviceType(ID_DeviceType) */
+  ,Foreign Key (ID_DeviceType) REFERENCES DeviceType(ID_DeviceType)
  );
 
 -- Tabelle Credential wird erstellt.
