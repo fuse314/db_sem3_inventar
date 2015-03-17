@@ -1,3 +1,5 @@
+use inventar;
+
 -- Inserts der Testadresse und Testpersonen
 INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (15,'Hintermwäldli','3 c'  ,'9015' ,'St. Gallen'      , 'CH');
 INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (16,'Hauptstrasse' ,'15 a' ,'9000' ,'St. Gallen'      , 'CH');
@@ -16,10 +18,10 @@ INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VA
 INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (10, 'Rechnungsstrasse', '10' ,  '9000', 'St. Gallen', 'CH');
 INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (11, 'Lafayette Street', '200', '10003', 'New York'  , 'US');
 
-INSERT INTO Person VALUES(1, 'Elias'  , 'Schwarz'     , 1, 5);
-INSERT INTO Person VALUES(2, 'Nadine' , 'Müller'      , 2, 6);
-INSERT INTO Person VALUES(3, 'Peter'  , 'Mittelholzer', 3, 7);
-INSERT INTO Person VALUES(4, 'Melanie', 'Egger'       , 4, 8);
+INSERT INTO Person VALUES(1, 'Elias'  , 'Schwarz'     , 1);
+INSERT INTO Person VALUES(2, 'Nadine' , 'Müller'      , 2);
+INSERT INTO Person VALUES(3, 'Peter'  , 'Mittelholzer', 3);
+INSERT INTO Person VALUES(4, 'Melanie', 'Egger'       , 4);
 
 insert INTO Customer VALUES(1, 'GemDat Informatik AG', 9, 10);
 insert INTO Customer VALUES(2, 'Testfirma'           , 3, 9);
