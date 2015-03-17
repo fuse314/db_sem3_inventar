@@ -203,7 +203,8 @@ create table Invoice (
 create table ServiceType (
   ID_ServiceType int auto_increment primary key,
   Name varchar(100) not null,
-  ValidFrom date not null
+  ValidFrom date not null,
+  ValidTo date null
 );
 
 create table InvoicePosition (
@@ -212,6 +213,7 @@ create table InvoicePosition (
   ID_ServiceType int,
 
   Amount decimal not null,
+  Price decimal,
   Description varchar(100),
 
   ID_Networkinterface int,
@@ -231,7 +233,9 @@ create table Fare (
   ID_Fare int auto_increment primary key,
   ID_ServiceType int,
   ID_Unit int,
+  Price decimal not null,
   ValidFrom date not null,
+  ValidTo date null
 
   foreign key (ID_Unit) references Unit(ID_Unit),
   foreign key (ID_ServiceType) references ServiceType(ID_ServiceType)
