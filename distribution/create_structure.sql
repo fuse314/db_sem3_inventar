@@ -101,6 +101,26 @@ ID_DeviceType int auto_increment
 ,Foreign Key (ID_DeviceCategory) references DeviceCategory (ID_DeviceCategory)
 );
 
+CREATE TABLE DeviceSwitch(
+ID_Device int auto_increment
+,Ports int
+,PRIMARY Key (ID_Device)
+,Foreign Key (ID_Device) references Device (ID_Device)
+);
+
+CREATE TABLE DeviceWorkstation(
+ID_Device int auto_increment,
+PRIMARY Key(ID_Device)
+,Foreign Key (ID_Device) references Device (ID_Device)
+);
+
+CREATE TABLE DevicePrinter(
+ID_Device int auto_increment,
+PRIMARY Key(ID_Device)
+,Foreign Key (ID_Device) references Device (ID_Device)
+);
+
+
 -- Tabelle Device wird erstellt mit Verknüpfung zu Location,DeviceType
 create table Device(
   ID_Device int auto_increment
@@ -242,8 +262,7 @@ create table Fare (
   ID_Unit int,
   Price decimal not null,
   ValidFrom date not null,
-  ValidTo date null
-
+  ValidTo date null,
   foreign key (ID_Unit) references Unit(ID_Unit),
   foreign key (ID_ServiceType) references ServiceType(ID_ServiceType)
 );
