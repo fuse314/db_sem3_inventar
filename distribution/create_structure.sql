@@ -37,7 +37,6 @@ CREATE TABLE POD (
   ID_Pod INT NOT NULL AUTO_INCREMENT,
   ID_Customer INT NOT NULL,
   ID_ContactPerson INT NOT NULL,
-  ID_InvoiceAddress INT NOT NULL,
   TimeZone VARCHAR(50) NULL DEFAULT 'Europe/Zurich',
   /* use php timezones:
      http://php.net/manual/de/timezones.php
