@@ -1,8 +1,8 @@
-INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location) VALUES (10,'Hintermwäldli','3 c',9015,'St. Gallen');
-INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location) VALUES (11,'Hauptstrasse','15 a',9000,'St. Gallen');
-INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location) VALUES (12,'Hauptstrasse','15 b',9000,'St. Gallen');
-INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location) VALUES (13,'Rue des Alpes','2',1700,'Fribourg');
-INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location) VALUES (14,'Brooklyn','23W4c',18278,'New York City NY');
+INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (10,'Hintermwäldli','3 c'  ,'9015' ,'St. Gallen'      , 'CH-SG');
+INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (11,'Hauptstrasse' ,'15 a' ,'9000' ,'St. Gallen'      , 'CH-SG');
+INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (12,'Hauptstrasse' ,'15 b' ,'9000' ,'St. Gallen'      , 'CH-SG');
+INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (13,'Rue des Alpes','2'    ,'1700' ,'Fribourg'        , 'CH-FR');
+INSERT INTO Address (ID_Address,Street,StreetNumber,Plz,Location, IsoCountry) VALUES (14,'Brooklyn'     ,'23W4c','18278','New York City NY', 'US-NY');
 
 INSERT INTO Person (ID_Person,FirstName,SurName,ID_Address) VALUES(10,'Gottfried','Mayer',10);
 
