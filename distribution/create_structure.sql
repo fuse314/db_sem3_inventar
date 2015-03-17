@@ -101,26 +101,6 @@ ID_DeviceType int auto_increment
 ,Foreign Key (ID_DeviceCategory) references DeviceCategory (ID_DeviceCategory)
 );
 
-CREATE TABLE DeviceSwitch(
-ID_Device int auto_increment
-,Ports int
-,PRIMARY Key (ID_Device)
-,Foreign Key (ID_Device) references Device (ID_Device)
-);
-
-CREATE TABLE DeviceWorkstation(
-ID_Device int auto_increment,
-PRIMARY Key(ID_Device)
-,Foreign Key (ID_Device) references Device (ID_Device)
-);
-
-CREATE TABLE DevicePrinter(
-ID_Device int auto_increment,
-PRIMARY Key(ID_Device)
-,Foreign Key (ID_Device) references Device (ID_Device)
-);
-
-
 -- Tabelle Device wird erstellt mit Verknüpfung zu Location,DeviceType
 create table Device(
   ID_Device int auto_increment
@@ -135,6 +115,25 @@ create table Device(
   ,Foreign Key (ID_Location) references Location (ID_Location)
   ,Foreign Key (ID_DeviceType) REFERENCES DeviceType(ID_DeviceType)
  );
+ 
+ CREATE TABLE DeviceSwitch(
+ID_Device int
+,Ports int
+,PRIMARY Key (ID_Device)
+,Foreign Key (ID_Device) references Device (ID_Device)
+);
+
+CREATE TABLE DeviceWorkstation(
+ID_Device int
+,PRIMARY Key(ID_Device)
+,Foreign Key (ID_Device) references Device (ID_Device)
+);
+
+CREATE TABLE DevicePrinter(
+ID_Device int
+,PRIMARY Key(ID_Device)
+,Foreign Key (ID_Device) references Device (ID_Device)
+);
 
 -- Tabelle Credential wird erstellt.
 CREATE TABLE Credential (
