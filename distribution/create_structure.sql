@@ -298,8 +298,8 @@ create table Unit (
   Abbreviation varchar(5) not null
 );
 
-create table Fare (
-  ID_Fare int auto_increment primary key,
+create table Rate (
+  ID_Rate int auto_increment primary key,
   ID_ServiceType int,
   ID_Unit int,
   Price decimal not null,
