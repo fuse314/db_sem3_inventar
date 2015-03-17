@@ -159,7 +159,7 @@ CREATE TABLE DevicePrinter(
 
 CREATE TABLE DeviceWorkstation(
   ID_Device int
-  
+  ,
   ,PRIMARY Key(ID_Device)
   ,Foreign Key (ID_Device) references Device (ID_Device)
 );
