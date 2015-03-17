@@ -8,18 +8,10 @@ INSERT INTO DeviceCategory(ID_DeviceCategory,Description) VALUES (5,'Workstation
 INSERT INTO DeviceCategory(ID_DeviceCategory,Description) VALUES (6,'Server');
 
 
-INSERT INTO Log (ID_Log, CreatedAt, Severity, Message, ID_Device) VALUES (1, 2015-03-17, 2, 'Warning: Could not connect to the server', 1);
-INSERT INTO Log (ID_Log, CreatedAt, Severity, Message, ID_Device) VALUES (2, 2015-03-17, 1, 'Information: Connected to Server'        , 2);
-INSERT INTO Log (ID_Log, CreatedAt, Severity, Message, ID_Device) VALUES (3, 2015-03-17, 3, 'Error: Server unknown'                   , 3);
-
-INSERT INTO Credential (ID_Credential, UserName, Password, SNMP_Community) VALUES (1, 'elias.schwarz'  , '734hgsue4', '234562dsaf');
-INSERT INTO Credential (ID_Credential, UserName, Password, SNMP_Community) VALUES (2, 'melanie.mueller', 'asdf'     , 'dsafewr234');
-INSERT INTO Credential (ID_Credential, UserName, Password, SNMP_Community) VALUES (3, 'hans.eberle'    , '1234'     , '234sa4dasf');
-INSERT INTO Credential (ID_Credential, UserName, Password, SNMP_Community) VALUES (4, 'marcel.signer'  , ''         , '234sdfawer');
-
-INSERT INTO RelDeviceCredential (ID_Device, ID_Credential) VALUES (1, 1);
-INSERT INTO RelDeviceCredential (ID_Device, ID_Credential) VALUES (2, 1);
-INSERT INTO RelDeviceCredential (ID_Device, ID_Credential) VALUES (3, 3);
+INSERT INTO Credential (ID_Credential, ID_Customer, UserName, Password, SNMP_Community) VALUES (1, 1, 'elias.schwarz'  , '734hgsue4', '234562dsaf');
+INSERT INTO Credential (ID_Credential, ID_Customer, UserName, Password, SNMP_Community) VALUES (2, 1, 'melanie.mueller', 'asdf'     , 'dsafewr234');
+INSERT INTO Credential (ID_Credential, ID_Customer, UserName, Password, SNMP_Community) VALUES (3, 1, 'hans.eberle'    , '1234'     , '234sa4dasf');
+INSERT INTO Credential (ID_Credential, ID_Customer, UserName, Password, SNMP_Community) VALUES (4, 1, 'marcel.signer'  , ''         , '234sdfawer');
 
 Insert into DeviceType(
   ID_DeviceType
@@ -28,11 +20,11 @@ Insert into DeviceType(
   ,ManufacturerNumber
 ) Values 
 (1, 1, 'Cisco', 'CS4582'),
-(3, 2, 'DELL', 'D-388'),
-(4, 3, 'HP', 'H-2600'),
-(5, 4, 'Canon', 'CN1234'),
-(6, 5, 'Dell', 'D-2050'),
-(7, 6, 'Dell', 'D-4093');
+(2, 2, 'DELL', 'D-388'),
+(3, 3, 'HP', 'H-2600'),
+(4, 4, 'Canon', 'CN1234'),
+(5, 5, 'Dell', 'D-2050'),
+(6, 6, 'Dell', 'D-4093');
 
 Insert into Device(
   ID_Device
@@ -54,6 +46,17 @@ Insert into Device(
   (10, 5, 1, 'WS 2', '345345-3453-34534-345', true),
   (11, 6, 2, 'App-Server', '4567-767-67676', true),
   (12, 6, 2, 'Test Server', '45f56-767-767', false);
+  
+  
+  
+INSERT INTO Log (ID_Log, CreatedAt, Severity, Message, ID_Device) VALUES (1, '2015-03-17', 2, 'Warning: Could not connect to the server', 1);
+INSERT INTO Log (ID_Log, CreatedAt, Severity, Message, ID_Device) VALUES (2, '2015-03-17', 1, 'Information: Connected to Server'        , 2);
+INSERT INTO Log (ID_Log, CreatedAt, Severity, Message, ID_Device) VALUES (3, '2015-03-17', 3, 'Error: Server unknown'                   , 3);
+
+INSERT INTO RelDeviceCredential (ID_Device, ID_Credential) VALUES (1, 1);
+INSERT INTO RelDeviceCredential (ID_Device, ID_Credential) VALUES (2, 1);
+INSERT INTO RelDeviceCredential (ID_Device, ID_Credential) VALUES (3, 3);
+
   
 Insert into DeviceSwitch(
   ID_Device
@@ -93,7 +96,7 @@ Insert into DeviceWLANAccesspoint(
 Insert into DevicePrinter(
   ID_Device
   ,resolution
-  ,pagePerMinute
+  ,pagesPerMinute
   ,isColorPrinter
 ) Values
   (7, '4800x2400 dpi', 40.5, false),

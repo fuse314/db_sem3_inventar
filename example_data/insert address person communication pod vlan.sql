@@ -39,9 +39,9 @@ INSERT INTO Communication (ID_Person, ID_CommunicationType, CommunicationDetail)
 INSERT INTO Communication (ID_Person, ID_CommunicationType, CommunicationDetail) VALUES (10,3,'echo123');
 INSERT INTO Communication (ID_Person, ID_CommunicationType, CommunicationDetail) VALUES (10,4,'uESfxauij5tSx8KGu3mA3YB7cJsQqQ');
 
-INSERT INTO POD (ID_Pod,ID_Customer,ID_ContactPerson,ID_InvoiceAddress) VALUES (1,1,10,8);
-INSERT INTO POD (ID_Pod,ID_Customer,ID_ContactPerson,ID_InvoiceAddress) VALUES (2,3,1,6);
-INSERT INTO POD (ID_Pod,ID_Customer,ID_ContactPerson,ID_InvoiceAddress) VALUES (3,3,10,8);
+INSERT INTO POD (ID_Pod,ID_Customer,ID_ContactPerson) VALUES (1,1,10);
+INSERT INTO POD (ID_Pod,ID_Customer,ID_ContactPerson) VALUES (2,3,1);
+INSERT INTO POD (ID_Pod,ID_Customer,ID_ContactPerson) VALUES (3,3,10);
 
 INSERT INTO Location (ID_Location,ID_Pod,ID_Address,ID_ParentLocation) VALUES (1,1,11,NULL);
 INSERT INTO Location (ID_Location,ID_Pod,ID_Address,ID_ParentLocation) VALUES (2,1,12,1);

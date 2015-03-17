@@ -1,3 +1,5 @@
+use inventar;
+
 /* Main Switch Interfaces (only connected interfaces have a record in this table) */
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (1,1,1000,1,NULL,NULL,1);
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (2,1,1000,1,NULL,NULL,1);
