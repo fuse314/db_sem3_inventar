@@ -27,12 +27,6 @@ insert INTO Customer VALUES(1, 'GemDat Informatik AG', 9, 10);
 insert INTO Customer VALUES(2, 'Testfirma'           , 3, 9);
 insert INTO Customer VALUES(3, 'Meisterfirma'        , 2, 10);
 
-
-
-
-
-
-
 INSERT INTO Person (ID_Person,FirstName,SurName,ID_Address) VALUES(10,'Gottfried','Mayer',10);
 
 INSERT INTO CommunicationType (ID_CommunicationType, Description) VALUES (1,'Direct Phone');
@@ -57,4 +51,4 @@ INSERT INTO Location (ID_Location,ID_Pod,ID_Address,ID_ParentLocation) VALUES (4
 INSERT INTO VLAN (ID_Vlan,ID_Location,Identifier,RangeStartIP4,RangeSubnetMask4,RangeDefaultGateway4,
   RangeStartIP6,RangeLength6,RangeDefaultGateway6) 
 VALUES (1,1,15,INET_ATON('192.168.0.2'),INET_ATON('255.255.255.0'),INET_ATON('192.168.0.1'),
-  HEX(INET6_ATON('3c3f::2')),1024,HEX(INET6_ATON('3c3f::1')) );
+  INET6_ATON('3c3f::2'),1024,INET6_ATON('3c3f::1') );
