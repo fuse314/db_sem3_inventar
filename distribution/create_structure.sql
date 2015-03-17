@@ -120,48 +120,55 @@ create table Device(
 CREATE TABLE DeviceSwitch(
   ID_Device int
   ,Ports int
-  ,inputVoltage varchar(100)
+  ,isPoESupported boolean
   ,PRIMARY Key (ID_Device)
   ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
 CREATE TABLE DeviceRouter(
-ID_Device int
- ,AntennaType varchar(100)
+  ID_Device int
+
+ ,Description varchar(100)
  ,PRIMARY Key(ID_Device)
  ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
 CREATE TABLE WLANStandard(
   ID_WLANStandard int auto_increment
-  ,Description varchar(100)
+  ,Designation varchar(100)
   ,PRIMARY KEY (ID_WLANStandard)
 );
 
 CREATE TABLE DeviceWLANAccesspoint(
   ID_Device int
  ,ID_WLANStandard int
+ ,AntennaType varchar(100)
  ,PRIMARY Key(ID_Device)
  ,Foreign Key (ID_Device) references Device (ID_Device)
  ,Foreign Key (ID_WLANStandard) references WLANStandard (ID_WLANStandard)
 );
 
 CREATE TABLE DevicePrinter(
-ID_Device int
-,PRIMARY Key(ID_Device)
-,Foreign Key (ID_Device) references Device (ID_Device)
+  ID_Device int
+  ,resolution varchar(100)
+  ,pagesPerMinute decimal
+  ,isColorPrinter boolean
+  ,PRIMARY Key(ID_Device)
+  ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
 CREATE TABLE DeviceWorkstation(
-ID_Device int
-,PRIMARY Key(ID_Device)
-,Foreign Key (ID_Device) references Device (ID_Device)
+  ID_Device int
+  
+  ,PRIMARY Key(ID_Device)
+  ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
 CREATE TABLE DeviceServer(
-ID_Device int
-,PRIMARY Key(ID_Device)
-,Foreign Key (ID_Device) references Device (ID_Device)
+  ID_Device int
+  
+  ,PRIMARY Key(ID_Device)
+  ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
 -- Tabelle Credential wird erstellt.
