@@ -195,14 +195,13 @@ create table Invoice (
   ID_Invoice int auto_increment primary key,
   InvoiceDate date not null,
   ID_Customer int not null,
-  /*ID_Payment int null,*/
 
   foreign key (ID_Customer) references Customer(ID_Customer)
 );
 
 create table ServiceType (
   ID_ServiceType int auto_increment primary key,
-  Name varchar(100) not null,
+  Description varchar(100) not null,
   ValidFrom date not null,
   ValidTo date null
 );
@@ -225,7 +224,7 @@ create table InvoicePosition (
 
 create table Unit (
   ID_Unit int auto_increment primary key,
-  Name varchar(100) not null,
+  Description varchar(100) not null,
   Abbreviation varchar(5) not null
 );
 
