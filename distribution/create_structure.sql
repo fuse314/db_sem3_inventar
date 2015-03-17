@@ -43,8 +43,7 @@ CREATE TABLE POD (
   */
   PRIMARY KEY (ID_Pod),
   FOREIGN KEY (ID_Customer) REFERENCES Customer(ID_Customer),
-  FOREIGN KEY (ID_ContactPerson) REFERENCES Person(ID_Person),
-  FOREIGN KEY (ID_InvoiceAddress) REFERENCES Address(ID_Address)
+  FOREIGN KEY (ID_ContactPerson) REFERENCES Person(ID_Person)
 );
 
 -- Tabelle Location wird erstellt mit Verknüpfung auf POD, Address, Location
