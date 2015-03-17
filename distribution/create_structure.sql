@@ -157,19 +157,16 @@ CREATE TABLE DevicePrinter(
   ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
-CREATE TABLE DeviceWorkstation(
+CREATE TABLE DeviceMachine(
   ID_Device int
-  ,
+  ,Processors varchar(100)
+  ,RAM varchar(100)
+  ,StorageSize varchar(100)
+  ,GPU varchar(100)
   ,PRIMARY Key(ID_Device)
   ,Foreign Key (ID_Device) references Device (ID_Device)
 );
 
-CREATE TABLE DeviceServer(
-  ID_Device int
-  
-  ,PRIMARY Key(ID_Device)
-  ,Foreign Key (ID_Device) references Device (ID_Device)
-);
 
 -- Tabelle Credential wird erstellt.
 CREATE TABLE Credential (
