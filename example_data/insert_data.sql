@@ -51,10 +51,8 @@ INSERT INTO Location (ID_Location,ID_Pod,ID_Address,ID_ParentLocation) VALUES (4
 INSERT INTO VLAN (ID_Vlan,ID_Location,Identifier,RangeStartIP4,RangeSubnetMask4,RangeDefaultGateway4,
   RangeStartIP6,RangeLength6,RangeDefaultGateway6) 
 VALUES (1,1,15,INET_ATON('192.168.0.2'),INET_ATON('255.255.255.0'),INET_ATON('192.168.0.1'),
-  INET6_ATON('3c3f::2'),1024,INET6_ATON('3c3f::1') );
-  
-  
-  use inventar;
+  /*INET6_ATON('3c3f::2')*/ NULL,1024,/*INET6_ATON('3c3f::1')*/ NULL );
+
 
 INSERT INTO DeviceCategory(ID_DeviceCategory,Description) VALUES (1,'Switch');
 INSERT INTO DeviceCategory(ID_DeviceCategory,Description) VALUES (2,'Router');
@@ -169,8 +167,6 @@ Insert into DeviceMachine(
   (12, 'AMD FX-9590', '8 GB', '2 TB', 'Sapphire Radeon R9 285 Dual-X OC'); 
   
 
-use inventar;
-
 /* Main Switch Interfaces (only connected interfaces have a record in this table) */
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (1,1,1000,1,NULL,NULL,1);
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (2,1,1000,1,NULL,NULL,1);
@@ -178,8 +174,8 @@ INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (4,1,1000,1,NULL,NULL,1);
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (5,1,1000,1,NULL,NULL,1);
 /* Router Interfaces */
-INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (6,1,1000,1,INET_ATON('192.168.16.1'),INET6_ATON('423c::1'),3);
-INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (7,1,1000,1,INET_ATON('192.168.17.1'),INET6_ATON('423d::1'),3);
+INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (6,1,1000,1,INET_ATON('192.168.16.1'),/*INET6_ATON('423c::1')*/ NULL,3);
+INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (7,1,1000,1,INET_ATON('192.168.17.1'),/*INET6_ATON('423d::1')*/ NULL,3);
 /* L3-Switch Interfaces */
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (8,1,1000,1,NULL,NULL,2);
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (9,1,1000,1,NULL,NULL,2);
@@ -187,8 +183,8 @@ INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (11,1,1000,1,NULL,NULL,2);
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (12,1,1000,1,NULL,NULL,2);
 /* Router 2 Interfaces */
-INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (13,1,1000,1,INET_ATON('192.168.17.254'),INET6_ATON('423d::254'),4);
-INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (14,1,1000,1,INET_ATON('192.168.24.254'),INET6_ATON('423f::254'),4);
+INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (13,1,1000,1,INET_ATON('192.168.17.254'),/*INET6_ATON('423d::254')*/ NULL,4);
+INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (14,1,1000,1,INET_ATON('192.168.24.254'),/*INET6_ATON('423f::254')*/ NULL,4);
 /* WLAN 1 Interfaces */
 INSERT INTO Networkinterface (ID_Networkinterface,FullDuplex,Speed,Physical,IPv4_Address,IPv6_Address,ID_Device) VALUES (15,1,1000,1,NULL,NULL,5);
 /* WLAN 2 Interfaces */
@@ -228,11 +224,6 @@ INSERT INTO RelNetworkinterfaceVLAN (ID_RelNetworkinterface,ID_VLAN) VALUES (10,
 INSERT INTO RelNetworkinterfaceVLAN (ID_RelNetworkinterface,ID_VLAN) VALUES (11,1);
 
 
-
-
-use inventar;
-
-
 insert into Unit(ID_Unit, description, abbreviation)
 values(1, 'Stunde', 'h'),
 (2, 'Stück', 'Stk.'),
@@ -260,11 +251,6 @@ values(1, 1, 3, 0.75, 'Fahrtweg zu Kunde'),
 
 insert into InvoicePosition(ID_InvoicePosition, ID_Invoice, ID_ServiceType, amount, description, price)
 values(3, 1, 2, 1, 'Gerät XYZ', 599.95);
-
-
-
-
-
 
 
 
