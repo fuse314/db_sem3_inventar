@@ -9,7 +9,6 @@ grant select, insert, delete, update, execute on inventar.* to 'gf'@'%';
 grant insert on inventar.pod to 'al'@'%';
 grant insert on inventar.location to 'al'@'%';
 grant select, insert on inventar.payment to 'gf'@'%';
-grant select, insert on inventar.* to 'sb'@'%';
 
 /* select grants for sb (all tables except payment) */
 /* SELECT CONCAT("GRANT select ON inventar.", table_name, " TO 'sb'@'%';")
@@ -55,7 +54,8 @@ GRANT select ON inventar.wlanstandard TO 'sb'@'%';
 /* insert grants for 'sb' (all tables except payment, pod, location) */
 /* SELECT CONCAT("GRANT insert ON inventar.", table_name, " TO 'sb'@'%';")
 FROM information_schema.TABLES
-WHERE table_schema = "inventar" AND table_name not in ("pod","location","payment");   */
+WHERE table_schema = "inventar" AND table_name not in 
+("pod","location","payment") AND table_name not like "v\_%";  */
 GRANT insert ON inventar.address TO 'sb'@'%';
 GRANT insert ON inventar.communication TO 'sb'@'%';
 GRANT insert ON inventar.communicationtype TO 'sb'@'%';
