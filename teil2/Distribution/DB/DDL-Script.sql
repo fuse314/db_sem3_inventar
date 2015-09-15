@@ -307,3 +307,55 @@ CREATE TABLE if not exists relnetworkinterfacevlan (
   PRIMARY KEY (ID_RelNetworkinterface, ID_VLAN),
   FOREIGN KEY (ID_VLAN) REFERENCES vlan(ID_VLAN)
 );
+
+
+/* Views */
+
+CREATE OR REPLACE VIEW v_devicecatalog AS 
+Select 
+  dt.Manufacturer AS Manufacturer
+  ,dc.Description AS TypeDescription
+  ,dt.NumInterfaces AS NumInterfaces
+  ,mt.Speed AS Speed,mt.FullDuplex AS FullDuplex
+  ,mt.Description AS MediumTypeDescription
+  ,dt.Description AS DeviceTypeDescription
+  ,r.Price AS Price 
+From 
+  inventar.devicetype dt
+    join inventar.devicecategory dc 
+	  on dt.ID_DeviceCategory = dc.ID_DeviceCategory and dc.Inactiv = 0
+	join inventar.mediumtype mt 
+	 on dt.ID_MediumType = mt.ID_MediumType
+	join inventar.networkinterface i 
+	  on mt.ID_MediumType = i.ID_MediumType
+	join inventar.rate r 
+	  on dt.ID_Rate = r.ID_Rate
+Group by 
+  dt.Manufacturer,dc.Description;
+  
+CREATE OR REPLACE VIEW v_freenetworkinterfaces AS 
+ Select l.Description AS LocationName
+ ,d.Hostname AS Hostname
+ ,ni.PortNr AS PortNumber
+ ,mt.Description AS mediumtype
+ ,mt.Speed AS MaxSpeed 
+ From 
+   inventar.networkinterface ni 
+     join inventar.device d 
+       on d.ID_Device = ni.ID_Device 
+    join inventar.location l 
+      on l.ID_Location = d.ID_Location
+    join inventar.devicetype dt 
+      on dt.ID_DeviceType = d.ID_DeviceType 
+    join inventar.mediumtype mt 
+      on mt.ID_MediumType = dt.ID_MediumType 
+Where 
+  not exists(
+    Select 'x' 
+	From inventar.relnetworkinterface rn 
+	Where 
+	  rn.ID_NetworkinterfaceA = ni.ID_Networkinterface
+	  OR rn.ID_NetworkinterfaceB = ni.ID_Networkinterface
+	)
+Order by 
+  d.Hostname;
