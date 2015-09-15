@@ -1,3 +1,26 @@
+use test_ruel;
+
+
+INSERT INTO wlanstandard 
+VALUES 
+(1,'802.11'),
+(2,'802.11a'),
+(3,'802.11a'),
+(4,'802.11g'),
+(5,'802.11n'),
+(6,'802.11ac'),
+(7,'802.11ad');
+
+INSERT INTO servicetype VALUES 
+(1,'Arbeitszeit','2001-01-20',NULL),
+(2,'Material','2001-01-20',NULL),
+(3,'Fahrtweg','2001-01-20',NULL);
+
+INSERT INTO unit VALUES 
+(1,'Stunde','h'),
+(2,'Stück','Stk.'),
+(3,'Kilometer','km');
+
 
 INSERT INTO address 
 VALUES 
@@ -18,13 +41,6 @@ VALUES
 (10,'Rechnungsstrasse','10','9000','St. Gallen','CH'),
 (11,'Lafayette Street','200','10003','New York','US');
 
-INSERT INTO communication 
-VALUES 
-(10,1,'+41553283232'),
-(10,2,'jemand@microsoft.com'),
-(10,3,'echo123'),
-(10,4,'uESfxauij5tSx8KGu3mA3YB7cJsQqQ');
-
 INSERT INTO communicationtype 
 VALUES 
 (1,'Direct Phone'),
@@ -32,18 +48,79 @@ VALUES
 (3,'Skype'),
 (4,'Push Notification Key');
 
-INSERT INTO credential VALUES 
-(1,1,'elias.schwarz','734hgsue4','234562dsaf',NULL),
-(2,1,'melanie.mueller','asdf','dsafewr234',NULL),
-(3,1,'hans.eberle','1234','234sa4dasf',NULL),
-(4,1,'marcel.signer','','234sdfawer',NULL);
+INSERT INTO communication 
+VALUES 
+(10,1,'+41553283232'),
+(10,2,'jemand@microsoft.com'),
+(10,3,'echo123'),
+(10,4,'uESfxauij5tSx8KGu3mA3YB7cJsQqQ');
 
 INSERT INTO customer 
 VALUES 
 (1,'GemDat Informatik AG',9,10,NULL),
 (2,'Testfirma',3,9,NULL),
 (3,'Meisterfirma',2,10,NULL),
-(11,'MauFirma',NULL,0,1000);
+(11,'MauFirma',NULL,1,1000);
+
+INSERT INTO credential VALUES 
+(1,1,'elias.schwarz','734hgsue4','234562dsaf',NULL),
+(2,1,'melanie.mueller','asdf','dsafewr234',NULL),
+(3,1,'hans.eberle','1234','234sa4dasf',NULL),
+(4,1,'marcel.signer','','234sdfawer',NULL);
+
+INSERT INTO person 
+VALUES 
+(1,'Elias','Schwarz',1),
+(2,'Nadine','Müller',2),
+(3,'Peter','Mittelholzer',3),
+(4,'Melanie','Egger',4),
+(10,'Gottfried','Mayer',10);
+
+INSERT INTO pod VALUES 
+(1,1,10,'Europe/Zurich','PodEins',NULL,NULL,NULL),
+(2,3,1,'Europe/Zurich','PodZwo',NULL,NULL,NULL),
+(3,3,10,'Europe/Zurich','PodDreiii',NULL,NULL,NULL),
+(4,11,1,'Schweiz','MauPod',NULL,NULL,NULL);
+
+INSERT INTO location 
+VALUES 
+(1,1,11,NULL,'Uno'),
+(2,1,12,1,'Duett'),
+(3,2,11,NULL,'Tresses'),
+(4,3,14,NULL,'Quattro'),
+(5,4,11,NULL,'MauLocation'),
+(6,3,14,NULL,'EscLocation');
+
+INSERT INTO devicecategory 
+VALUES 
+(1,'Switch',0),
+(2,'Router',0),
+(3,'WLAN Accesspoint',0),
+(4,'Printer',0),
+(5,'Workstation',1),
+(6,'Server',0);
+
+INSERT INTO rate 
+VALUES 
+(1,1,1,180,'2001-01-20','2031-12-20'),
+(2,1,1,200,'2001-01-20',NULL),
+(3,3,3,3,'2001-01-20',NULL);
+
+INSERT INTO mediumtype VALUES 
+(1,'RJ-45 CAT5',1000,1,'1000BASE-T'),
+(2,'RJ-45 CAT5e',1000,1,'1000BASE-T'),
+(3,'RJ-45 CAT6',1000,1,'1000BASE-T'),
+(4,'RJ-45 CAT7',1000,1,'1000BASE-T'),
+(5,'RJ-45 CAT42',1000,1,'1000BASE-T');
+
+
+INSERT INTO devicetype VALUES 
+(1,1,'Cisco','CS4582',5,1,1,'Modell 1000'),
+(2,2,'DELL','D-388',0,2,1,'Modell 3770'),
+(3,3,'HP','H-2600',0,3,1,'Modell 4500'),
+(4,4,'Canon','CN1234',0,2,1,'Modell 2000'),
+(5,5,'Dell','D-2050',0,3,1,'Modell 3400'),
+(6,6,'Dell','D-4093',0,1,1,'Modell 2200');
 
 INSERT INTO device 
 VALUES 
@@ -59,16 +136,12 @@ VALUES
 (10,5,1,'WS 2','345345-3453-34534-345',1),
 (11,6,2,'App-Server','4567-767-67676',1),
 (12,6,2,'Test Server','45f56-767-767',0),
+(24,1,5,'Windows Server','1234',1),
+(25,1,5,'Linux Server','1234',1),
+(26,1,5,'OS X Server','1234',1),
+(27,1,5,'OS X Development Server','1234',1),
+(28,1,5,'Build Server','1234',1),
 (29,1,5,'localhost','1234',1);
-
-INSERT INTO devicecategory 
-VALUES 
-(1,'Switch',0),
-(2,'Router',0),
-(3,'WLAN Accesspoint',0),
-(4,'Printer',0),
-(5,'Workstation',1),
-(6,'Server',0);
 
 INSERT INTO devicemachine 
 VALUES 
@@ -87,81 +160,35 @@ INSERT INTO deviceswitch VALUES
 (1,0),
 (2,0);
 
-INSERT INTO devicetype VALUES 
-(1,1,'Cisco','CS4582',5,1,1,'Modell 1000'),
-(2,2,'DELL','D-388',0,2,1,'Modell 3770'),
-(3,3,'HP','H-2600',0,3,1,'Modell 4500'),
-(4,4,'Canon','CN1234',0,2,1,'Modell 2000'),
-(5,5,'Dell','D-2050',0,3,1,'Modell 3400'),
-(6,6,'Dell','D-4093',0,1,1,'Modell 2200');
-
 INSERT INTO devicewlanaccesspoint VALUES 
 (5,3,'Omnidirectional'),
 (6,7,'Directional');
 
-INSERT INTO invoice VALUES 
-(1,'2015-08-18',1,1),
-(2,'2015-08-18',2,1),
-(3,NULL,3,0),
-(4,NULL,1,0),
-(5,'2015-07-30',1,1),
-(13,NULL,11,0),
-(14,'2015-08-24',11,1);
-
-INSERT INTO invoiceposition 
-VALUES 
-(1,1,1,100,NULL,'Fahrtweg zu Kunde',NULL,NULL,3),
-(2,1,1,3,NULL,'Installation Gerät XYZ',NULL,3,3),
-(3,1,2,1,600,'Gerät XYZ',NULL,2,NULL),
-(4,2,NULL,1,6000,NULL,1,NULL,NULL),
-(5,5,NULL,1,1100,NULL,2,NULL,NULL),
-(8,14,NULL,1,600,'Geleistete Arbeit',NULL,NULL,5),
-(7,14,NULL,1,500,'Fahrtweg',NULL,NULL,5),
-(9,14,NULL,1,8000,'Material',NULL,NULL,5);
-
-INSERT INTO location 
-VALUES 
-(1,1,11,NULL,'Uno'),
-(2,1,12,1,'Duett'),
-(3,2,11,NULL,'Tresses'),
-(4,3,14,NULL,'Quattro'),
-(5,4,11,NULL,'MauLocation'),
-(6,3,14,NULL,'EscLocation');
-
-INSERT INTO log VALUES 
-(6,'2015-08-12 16:56:28',3,'Is was passiert.',5,0),
-(7,'2015-08-12 16:57:04',1,'Is was wichtiges passiert.',6,0),
-(8,'2015-08-24 17:24:54',1,'billed pod',29,0),
-(9,'2015-09-15 15:56:19',1,'es ist was passiert',11,0),
-(10,'2015-09-15 15:56:49',1,'es ist was passiert',11,0);
-
-INSERT INTO mediumtype VALUES 
-(1,'RJ-45 CAT6',1000,1,'1000BASE-T');
 
 INSERT INTO networkinterface 
 VALUES 
 (1,1,NULL,NULL,1,NULL,1,NULL,NULL,NULL,NULL),
-(2,1,NULL,NULL,1,NULL,0,NULL,NULL,NULL,NULL),
-(3,1,NULL,NULL,1,NULL,0,NULL,NULL,NULL,NULL),
-(4,1,NULL,NULL,1,NULL,0,NULL,NULL,NULL,NULL),
-(5,1,NULL,NULL,1,NULL,0,NULL,NULL,NULL,NULL),
-(6,1,3232239617,NULL,3,NULL,0,NULL,NULL,NULL,NULL),
-(7,1,3232239873,NULL,3,NULL,0,NULL,NULL,NULL,NULL),
-(8,1,NULL,NULL,2,NULL,0,NULL,NULL,NULL,NULL),
-(9,1,NULL,NULL,2,NULL,0,NULL,NULL,NULL,NULL),
-(10,1,NULL,NULL,2,NULL,0,NULL,NULL,NULL,NULL),
-(11,1,NULL,NULL,2,NULL,0,NULL,NULL,NULL,NULL),
-(12,1,NULL,NULL,2,NULL,0,NULL,NULL,NULL,NULL),
-(13,1,3232240126,NULL,4,NULL,0,NULL,NULL,NULL,NULL),
-(14,1,3232241918,NULL,4,NULL,0,NULL,NULL,NULL,NULL),
-(15,1,NULL,NULL,5,NULL,0,NULL,NULL,NULL,NULL),
-(16,1,NULL,NULL,6,NULL,0,NULL,NULL,NULL,NULL),
-(17,1,3232239877,NULL,7,NULL,0,NULL,NULL,NULL,NULL),
-(18,1,3232239623,NULL,8,NULL,0,NULL,NULL,NULL,NULL),
-(19,1,NULL,NULL,9,NULL,0,NULL,NULL,NULL,NULL),
-(20,1,NULL,NULL,10,NULL,0,NULL,NULL,NULL,NULL),
-(21,1,3232239875,NULL,11,NULL,0,NULL,NULL,NULL,NULL),
-(22,1,3232239876,NULL,12,NULL,0,NULL,NULL,NULL,NULL),
+(2,1,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,1,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,1,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,1,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,1,3232239617,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,1,3232239873,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,1,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,1,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,1,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,1,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,1,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(13,1,3232240126,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL),
+(14,1,3232241918,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL),
+(15,1,NULL,NULL,5,NULL,NULL,NULL,NULL,NULL,NULL),
+(16,1,NULL,NULL,6,NULL,NULL,NULL,NULL,NULL,NULL),
+(17,1,3232239877,NULL,7,NULL,NULL,NULL,NULL,NULL,NULL),
+(18,1,3232239623,NULL,8,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,1,NULL,NULL,9,NULL,NULL,NULL,NULL,NULL,NULL),
+(20,1,NULL,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL),
+(21,1,3232239875,NULL,11,NULL,NULL,NULL,NULL,NULL,NULL),
+(22,1,3232239876,NULL,12,NULL,NULL,NULL,NULL,NULL,NULL),
 (23,1,NULL,NULL,12,23,1,NULL,NULL,NULL,NULL),
 (24,NULL,NULL,NULL,24,5,NULL,NULL,NULL,NULL,NULL),
 (25,NULL,NULL,NULL,24,4,NULL,NULL,NULL,NULL,NULL),
@@ -194,30 +221,39 @@ VALUES
 (52,1,167783523,NULL,29,4,1,NULL,NULL,NULL,NULL),
 (53,1,167783524,NULL,29,5,1,NULL,NULL,NULL,NULL);
 
+INSERT INTO invoice VALUES 
+(1,'2015-08-18',1,1),
+(2,'2015-08-18',2,1),
+(3,NULL,3,0),
+(4,NULL,1,0),
+(5,'2015-07-30',1,1),
+(13,NULL,11,0),
+(14,'2015-08-24',11,1);
+
+INSERT INTO invoiceposition 
+VALUES 
+(1,1,1,100,NULL,'Fahrtweg zu Kunde',NULL,NULL,3),
+(2,1,1,3,NULL,'Installation Gerät XYZ',NULL,3,3),
+(3,1,2,1,600,'Gerät XYZ',NULL,2,NULL),
+(4,2,NULL,1,6000,NULL,1,NULL,NULL),
+(5,5,NULL,1,1100,NULL,2,NULL,NULL),
+(8,14,NULL,1,600,'Geleistete Arbeit',NULL,NULL,5),
+(7,14,NULL,1,500,'Fahrtweg',NULL,NULL,5),
+(9,14,NULL,1,8000,'Material',NULL,NULL,5);
+
+INSERT INTO log VALUES 
+(6,'2015-08-12 16:56:28',3,'Is was passiert.',5,0),
+(7,'2015-08-12 16:57:04',1,'Is was wichtiges passiert.',6,0),
+(8,'2015-08-24 17:24:54',1,'billed pod',29,0),
+(9,'2015-09-15 15:56:19',1,'es ist was passiert',11,0),
+(10,'2015-09-15 15:56:49',1,'es ist was passiert',11,0);
+
 INSERT INTO payment VALUES 
 (1,1,100,'2001-01-20'),
 (2,11,300,'2023-08-20'),
 (3,11,300,'2015-08-23');
 
-INSERT INTO person 
-VALUES 
-(1,'Elias','Schwarz',1),
-(2,'Nadine','Müller',2),
-(3,'Peter','Mittelholzer',3),
-(4,'Melanie','Egger',4),
-(10,'Gottfried','Mayer',10);
-
-INSERT INTO pod VALUES 
-(1,1,10,'Europe/Zurich','PodEins',NULL,NULL,NULL),
-(2,3,1,'Europe/Zurich','PodZwo',NULL,NULL,NULL),
-(3,3,10,'Europe/Zurich','PodDreiii',NULL,NULL,NULL),
-(4,11,1,'Schweiz','MauPod',NULL,NULL,NULL);
-
-INSERT INTO rate 
-VALUES 
-(1,1,1,180,'2001-01-20','2031-12-20'),
-(2,1,1,200,'2001-01-20',NULL),
-(3,3,3,3,'2001-01-20',NULL);
+INSERT INTO vlan VALUES (1,1,15,3232235522,NULL,1024);
 
 INSERT INTO reldevicecredential VALUES (1,1),(2,1),(3,3);
 
@@ -244,32 +280,11 @@ INSERT INTO relnetworkinterfacevlan VALUES
 (12,1),
 (13,1);
 
-INSERT INTO servicetype VALUES 
-(1,'Arbeitszeit','2001-01-20',NULL),
-(2,'Material','2001-01-20',NULL),
-(3,'Fahrtweg','2001-01-20',NULL);
-
-INSERT INTO unit VALUES 
-(1,'Stunde','h'),
-(2,'Stück','Stk.'),
-(3,'Kilometer','km');
-
-INSERT INTO vlan VALUES (1,1,15,3232235522,NULL,1024);
-
-INSERT INTO wlanstandard 
-VALUES 
-(1,'802.11'),
-(2,'802.11a'),
-(3,'802.11a'),
-(4,'802.11g'),
-(5,'802.11n'),
-(6,'802.11ac'),
-(7,'802.11ad');
 
 
 
 DELIMITER $$
-CREATE  FUNCTION BetragRechnungMitGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
+CREATE FUNCTION BetragRechnungMitGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
 begin
 declare sumRechnungen decimal;
 declare sumPayments decimal;
@@ -313,12 +328,14 @@ return result;
 end $$
 DELIMITER ;
 
-CREATE  FUNCTION BetragRechnungOhneGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
-    READS SQL DATA
+DELIMITER $$
+CREATE FUNCTION BetragRechnungOhneGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
 begin
-declare sum decimal;
-declare curdate datetime;
-set curdate = curdate();
+ declare sum decimal;
+ declare curdate datetime;
+
+ set curdate = curdate();
+
  select  ifnull(Sum(ifnull(ip.Price, ifnull(r.Price, 0)) * Amount), 0) into sum
 		   from InvoicePosition ip
            left join Rate r
