@@ -121,7 +121,7 @@ CREATE TABLE if not exists servicetype (
   PRIMARY KEY (ID_ServiceType)
 );
 
-CREATE TABLE wlanstandard (
+CREATE TABLE if not exists wlanstandard (
   ID_WLANStandard int(11) NOT NULL AUTO_INCREMENT,
   Designation varchar(100) NULL,
   PRIMARY KEY (ID_WLANStandard)
@@ -139,7 +139,7 @@ CREATE TABLE if not exists rate (
   FOREIGN KEY (ID_ServiceType) REFERENCES servicetype(ID_ServiceType)
 );
 
-CREATE TABLE mediumtype (
+CREATE TABLE if not exists mediumtype (
   ID_MediumType int(11) NOT NULL AUTO_INCREMENT,
   Description varchar(100) NOT NULL,
   Speed int(11) NULL,
@@ -226,7 +226,7 @@ CREATE TABLE if not exists devicewlanaccesspoint (
   FOREIGN KEY (ID_Customer) REFERENCES customer(ID_Customer)
 );
 
-CREATE TABLE networkinterface (
+CREATE TABLE if not exists networkinterface (
   ID_Networkinterface int(11) NOT NULL AUTO_INCREMENT,
   Physical tinyint(1) NULL,
   IPv4_Address int(10) unsigned NULL,
