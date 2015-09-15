@@ -1,0 +1,1137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="Id_Address" />
+          </Key>
+          <Property Name="Id_Address" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Street" Type="varchar" MaxLength="100" />
+          <Property Name="StreetNumber" Type="varchar" MaxLength="8" />
+          <Property Name="Plz" Type="varchar" MaxLength="100" />
+          <Property Name="Location" Type="varchar" MaxLength="100" />
+          <Property Name="IsoCountry" Type="varchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="communication">
+          <Key>
+            <PropertyRef Name="ID_Person" />
+            <PropertyRef Name="ID_CommunicationType" />
+          </Key>
+          <Property Name="ID_Person" Type="int" Nullable="false" />
+          <Property Name="ID_CommunicationType" Type="int" Nullable="false" />
+          <Property Name="CommunicationDetail" Type="varchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="communicationtype">
+          <Key>
+            <PropertyRef Name="ID_CommunicationType" />
+          </Key>
+          <Property Name="ID_CommunicationType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="credential">
+          <Key>
+            <PropertyRef Name="ID_Credential" />
+          </Key>
+          <Property Name="ID_Credential" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Customer" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="SNMP_Community" Type="varchar" MaxLength="100" />
+          <Property Name="PrivilegeLevel" Type="int" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="ID_Customer" />
+          </Key>
+          <Property Name="ID_Customer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="ID_InvoiceAddress" Type="int" />
+          <Property Name="ID_Address" Type="int" Nullable="false" />
+          <Property Name="InvoiceThreshold" Type="int" />
+        </EntityType>
+        <EntityType Name="device">
+          <Key>
+            <PropertyRef Name="ID_Device" />
+          </Key>
+          <Property Name="ID_Device" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_DeviceType" Type="int" Nullable="false" />
+          <Property Name="ID_Location" Type="int" Nullable="false" />
+          <Property Name="Hostname" Type="varchar" MaxLength="100" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="100" />
+          <Property Name="IsPhysical" Type="bool" />
+        </EntityType>
+        <EntityType Name="devicecategory">
+          <Key>
+            <PropertyRef Name="ID_DeviceCategory" />
+          </Key>
+          <Property Name="ID_DeviceCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Inactiv" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="devicemachine">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="int" Nullable="false" />
+          <Property Name="Processors" Type="varchar" MaxLength="100" />
+          <Property Name="RAM" Type="varchar" MaxLength="100" />
+          <Property Name="StorageSize" Type="varchar" MaxLength="100" />
+          <Property Name="GPU" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="deviceprinter">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="int" Nullable="false" />
+          <Property Name="resolution" Type="varchar" MaxLength="100" />
+          <Property Name="pagesPerMinute" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="isColorPrinter" Type="bool" />
+        </EntityType>
+        <EntityType Name="devicerouter">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="deviceswitch">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="int" Nullable="false" />
+          <Property Name="isPoESupported" Type="bool" />
+        </EntityType>
+        <EntityType Name="devicetype">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_DeviceCategory" Type="int" Nullable="false" />
+          <Property Name="Manufacturer" Type="varchar" MaxLength="100" />
+          <Property Name="ManufacturerNumber" Type="varchar" MaxLength="100" />
+          <Property Name="NumInterfaces" Type="int" Nullable="false" />
+          <Property Name="ID_Rate" Type="int" />
+          <Property Name="ID_MediumType" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="devicewlanaccesspoint">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="int" Nullable="false" />
+          <Property Name="ID_WLANStandard" Type="int" />
+          <Property Name="AntennaType" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="ID_Invoice" />
+          </Key>
+          <Property Name="ID_Invoice" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceDate" Type="date" />
+          <Property Name="ID_Customer" Type="int" Nullable="false" />
+          <Property Name="Closed" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="invoiceposition">
+          <Key>
+            <PropertyRef Name="ID_InvoicePosition" />
+          </Key>
+          <Property Name="ID_InvoicePosition" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Invoice" Type="int" Nullable="false" />
+          <Property Name="ID_ServiceType" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="11" Scale="0" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="ID_Networkinterface" Type="int" />
+          <Property Name="ID_Device" Type="int" />
+          <Property Name="ID_Location" Type="int" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="ID_Location" />
+          </Key>
+          <Property Name="ID_Location" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Pod" Type="int" Nullable="false" />
+          <Property Name="ID_Address" Type="int" Nullable="false" />
+          <Property Name="ID_ParentLocation" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="ID_Log" />
+          </Key>
+          <Property Name="ID_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedAt" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="Severity" Type="int" />
+          <Property Name="Message" Type="varchar" MaxLength="1000" />
+          <Property Name="ID_Device" Type="int" Nullable="false" />
+          <Property Name="Acknowledged" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mediumtype">
+          <Key>
+            <PropertyRef Name="ID_MediumType" />
+          </Key>
+          <Property Name="ID_MediumType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Speed" Type="int" />
+          <Property Name="FullDuplex" Type="tinyint" Nullable="false" />
+          <Property Name="Technology" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="networkinterface">
+          <Key>
+            <PropertyRef Name="ID_Networkinterface" />
+          </Key>
+          <Property Name="ID_Networkinterface" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Physical" Type="bool" />
+          <Property Name="IPv4_Address" Type="uint" />
+          <Property Name="IPv6_Address" Type="varbinary" MaxLength="16" />
+          <Property Name="ID_Device" Type="int" Nullable="false" />
+          <Property Name="PortNr" Type="int" />
+          <Property Name="ID_MediumType" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="IPv4_SubnetMask" Type="int" />
+          <Property Name="IPv4_DefaultGateway" Type="int" />
+          <Property Name="IPv6_DefaultGateway" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="ID_Payment" />
+          </Key>
+          <Property Name="ID_Payment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Customer" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="ID_Person" />
+          </Key>
+          <Property Name="ID_Person" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="SurName" Type="varchar" MaxLength="100" />
+          <Property Name="ID_Address" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pod">
+          <Key>
+            <PropertyRef Name="ID_Pod" />
+          </Key>
+          <Property Name="ID_Pod" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Customer" Type="int" Nullable="false" />
+          <Property Name="ID_ContactPerson" Type="int" Nullable="false" />
+          <Property Name="TimeZone" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DomainName" Type="varchar" MaxLength="100" />
+          <Property Name="NameServer" Type="bigint" />
+          <Property Name="SntpServer" Type="bigint" />
+        </EntityType>
+        <EntityType Name="rate">
+          <Key>
+            <PropertyRef Name="ID_Rate" />
+          </Key>
+          <Property Name="ID_Rate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_ServiceType" Type="int" />
+          <Property Name="ID_Unit" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="ValidFrom" Type="date" Nullable="false" />
+          <Property Name="ValidTo" Type="date" />
+        </EntityType>
+        <EntityType Name="reldevicecredential">
+          <Key>
+            <PropertyRef Name="ID_Device" />
+            <PropertyRef Name="ID_Credential" />
+          </Key>
+          <Property Name="ID_Device" Type="int" Nullable="false" />
+          <Property Name="ID_Credential" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="relnetworkinterface">
+          <Key>
+            <PropertyRef Name="ID_RelNetworkinterface" />
+          </Key>
+          <Property Name="ID_RelNetworkinterface" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_NetworkinterfaceA" Type="int" Nullable="false" />
+          <Property Name="ID_NetworkinterfaceB" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="relnetworkinterfacevlan">
+          <Key>
+            <PropertyRef Name="ID_RelNetworkinterface" />
+            <PropertyRef Name="ID_VLAN" />
+          </Key>
+          <Property Name="ID_RelNetworkinterface" Type="int" Nullable="false" />
+          <Property Name="ID_VLAN" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="servicetype">
+          <Key>
+            <PropertyRef Name="ID_ServiceType" />
+          </Key>
+          <Property Name="ID_ServiceType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ValidFrom" Type="date" Nullable="false" />
+          <Property Name="ValidTo" Type="date" />
+        </EntityType>
+        <EntityType Name="unit">
+          <Key>
+            <PropertyRef Name="ID_Unit" />
+          </Key>
+          <Property Name="ID_Unit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Abbreviation" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vlan">
+          <Key>
+            <PropertyRef Name="ID_Vlan" />
+          </Key>
+          <Property Name="ID_Vlan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Location" Type="int" Nullable="false" />
+          <Property Name="Identifier" Type="int" Nullable="false" />
+          <Property Name="RangeStartIP4" Type="uint" />
+          <Property Name="RangeStartIP6" Type="varbinary" MaxLength="16" />
+          <Property Name="RangeLength6" Type="uint" />
+        </EntityType>
+        <EntityType Name="wlanstandard">
+          <Key>
+            <PropertyRef Name="ID_WLANStandard" />
+          </Key>
+          <Property Name="ID_WLANStandard" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.inventar.v_invoices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_invoices">
+          <Key>
+            <PropertyRef Name="ID_Invoice" />
+            <PropertyRef Name="ID_Customer" />
+            <PropertyRef Name="Closed" />
+          </Key>
+          <Property Name="ID_Invoice" Type="int" Nullable="false" />
+          <Property Name="InvoiceDate" Type="date" />
+          <Property Name="ID_Customer" Type="int" Nullable="false" />
+          <Property Name="Closed" Type="bool" Nullable="false" />
+          <Property Name="BetragOhneGutschrift" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="BetragMitGutschrift" Type="decimal" Precision="10" Scale="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.inventar.v_usageperlocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_usageperlocation">
+          <Key>
+            <PropertyRef Name="id_location" />
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="id_location" Type="int" Nullable="false" />
+          <Property Name="ID_DeviceType" Type="int" Nullable="false" />
+          <Property Name="Usage" Type="decimal" Precision="49" Scale="4" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.inventar.v_usageperpod' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_usageperpod">
+          <Key>
+            <PropertyRef Name="id_pod" />
+          </Key>
+          <Property Name="id_pod" Type="int" Nullable="false" />
+          <Property Name="Usage" Type="decimal" Precision="65" Scale="8" />
+        </EntityType>
+        <Function Name="P_NightlyInvoicing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="inventar" />
+        <Function Name="P_PodBill" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="inventar">
+          <Parameter Name="id_pod" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="address" EntityType="Self.address" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="communication" EntityType="Self.communication" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="communicationtype" EntityType="Self.communicationtype" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="credential" EntityType="Self.credential" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="device" EntityType="Self.device" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="devicecategory" EntityType="Self.devicecategory" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="devicemachine" EntityType="Self.devicemachine" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="deviceprinter" EntityType="Self.deviceprinter" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="devicerouter" EntityType="Self.devicerouter" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="deviceswitch" EntityType="Self.deviceswitch" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="devicetype" EntityType="Self.devicetype" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="devicewlanaccesspoint" EntityType="Self.devicewlanaccesspoint" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="invoice" EntityType="Self.invoice" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="invoiceposition" EntityType="Self.invoiceposition" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="location" EntityType="Self.location" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="log" EntityType="Self.log" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="mediumtype" EntityType="Self.mediumtype" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="networkinterface" EntityType="Self.networkinterface" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="payment" EntityType="Self.payment" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="person" EntityType="Self.person" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="pod" EntityType="Self.pod" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="rate" EntityType="Self.rate" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="reldevicecredential" EntityType="Self.reldevicecredential" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="relnetworkinterface" EntityType="Self.relnetworkinterface" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="relnetworkinterfacevlan" EntityType="Self.relnetworkinterfacevlan" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="servicetype" EntityType="Self.servicetype" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="unit" EntityType="Self.unit" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="vlan" EntityType="Self.vlan" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="wlanstandard" EntityType="Self.wlanstandard" Schema="inventar" store:Type="Tables" />
+          <EntitySet Name="v_invoices" EntityType="Self.v_invoices" store:Type="Views" store:Schema="inventar">
+            <DefiningQuery>SELECT
+`v_invoices`.`ID_Invoice`, 
+`v_invoices`.`InvoiceDate`, 
+`v_invoices`.`ID_Customer`, 
+`v_invoices`.`Closed`, 
+`v_invoices`.`BetragOhneGutschrift`, 
+`v_invoices`.`BetragMitGutschrift`
+FROM `v_invoices` AS `v_invoices`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_usageperlocation" EntityType="Self.v_usageperlocation" store:Type="Views" store:Schema="inventar">
+            <DefiningQuery>SELECT
+`v_usageperlocation`.`id_location`, 
+`v_usageperlocation`.`ID_DeviceType`, 
+`v_usageperlocation`.`Usage`
+FROM `v_usageperlocation` AS `v_usageperlocation`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_usageperpod" EntityType="Self.v_usageperpod" store:Type="Views" store:Schema="inventar">
+            <DefiningQuery>SELECT
+`v_usageperpod`.`id_pod`, 
+`v_usageperpod`.`Usage`
+FROM `v_usageperpod` AS `v_usageperpod`</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="Id_Address" />
+          </Key>
+          <Property Name="Id_Address" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StreetNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Plz" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsoCountry" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="communication">
+          <Key>
+            <PropertyRef Name="ID_Person" />
+            <PropertyRef Name="ID_CommunicationType" />
+          </Key>
+          <Property Name="ID_Person" Type="Int32" Nullable="false" />
+          <Property Name="ID_CommunicationType" Type="Int32" Nullable="false" />
+          <Property Name="CommunicationDetail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="communicationtype">
+          <Key>
+            <PropertyRef Name="ID_CommunicationType" />
+          </Key>
+          <Property Name="ID_CommunicationType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="credential">
+          <Key>
+            <PropertyRef Name="ID_Credential" />
+          </Key>
+          <Property Name="ID_Credential" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SNMP_Community" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PrivilegeLevel" Type="Int32" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="ID_Customer" />
+          </Key>
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID_InvoiceAddress" Type="Int32" />
+          <Property Name="ID_Address" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceThreshold" Type="Int32" />
+        </EntityType>
+        <EntityType Name="device">
+          <Key>
+            <PropertyRef Name="ID_Device" />
+          </Key>
+          <Property Name="ID_Device" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="ID_Location" Type="Int32" Nullable="false" />
+          <Property Name="Hostname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsPhysical" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="devicecategory">
+          <Key>
+            <PropertyRef Name="ID_DeviceCategory" />
+          </Key>
+          <Property Name="ID_DeviceCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Inactiv" Type="SByte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="devicemachine">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="Processors" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RAM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StorageSize" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GPU" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="deviceprinter">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="resolution" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pagesPerMinute" Type="Decimal" />
+          <Property Name="isColorPrinter" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="devicerouter">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="deviceswitch">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="isPoESupported" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="devicetype">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_DeviceCategory" Type="Int32" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ManufacturerNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NumInterfaces" Type="Int32" Nullable="false" />
+          <Property Name="ID_Rate" Type="Int32" />
+          <Property Name="ID_MediumType" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="devicewlanaccesspoint">
+          <Key>
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="ID_WLANStandard" Type="Int32" />
+          <Property Name="AntennaType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="ID_Invoice" />
+          </Key>
+          <Property Name="ID_Invoice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceDate" Type="DateTime" />
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+          <Property Name="Closed" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="invoiceposition">
+          <Key>
+            <PropertyRef Name="ID_InvoicePosition" />
+          </Key>
+          <Property Name="ID_InvoicePosition" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Invoice" Type="Int32" Nullable="false" />
+          <Property Name="ID_ServiceType" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="Price" Type="Decimal" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Networkinterface" Type="Int32" />
+          <Property Name="ID_Device" Type="Int32" />
+          <Property Name="ID_Location" Type="Int32" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="ID_Location" />
+          </Key>
+          <Property Name="ID_Location" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Pod" Type="Int32" Nullable="false" />
+          <Property Name="ID_Address" Type="Int32" Nullable="false" />
+          <Property Name="ID_ParentLocation" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="ID_Log" />
+          </Key>
+          <Property Name="ID_Log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
+          <Property Name="Severity" Type="Int32" />
+          <Property Name="Message" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Device" Type="Int32" Nullable="false" />
+          <Property Name="Acknowledged" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mediumtype">
+          <Key>
+            <PropertyRef Name="ID_MediumType" />
+          </Key>
+          <Property Name="ID_MediumType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Speed" Type="Int32" />
+          <Property Name="FullDuplex" Type="SByte" Nullable="false" />
+          <Property Name="Technology" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="networkinterface">
+          <Key>
+            <PropertyRef Name="ID_Networkinterface" />
+          </Key>
+          <Property Name="ID_Networkinterface" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Physical" Type="Boolean" />
+          <Property Name="IPv4_Address" Type="Int64" />
+          <Property Name="IPv6_Address" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ID_Device" Type="Int32" Nullable="false" />
+          <Property Name="PortNr" Type="Int32" />
+          <Property Name="ID_MediumType" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IPv4_SubnetMask" Type="Int32" />
+          <Property Name="IPv4_DefaultGateway" Type="Int32" />
+          <Property Name="IPv6_DefaultGateway" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="ID_Payment" />
+          </Key>
+          <Property Name="ID_Payment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="ID_Person" />
+          </Key>
+          <Property Name="ID_Person" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SurName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Address" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pod">
+          <Key>
+            <PropertyRef Name="ID_Pod" />
+          </Key>
+          <Property Name="ID_Pod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+          <Property Name="ID_ContactPerson" Type="Int32" Nullable="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DomainName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NameServer" Type="Int64" />
+          <Property Name="SntpServer" Type="Int64" />
+        </EntityType>
+        <EntityType Name="rate">
+          <Key>
+            <PropertyRef Name="ID_Rate" />
+          </Key>
+          <Property Name="ID_Rate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_ServiceType" Type="Int32" />
+          <Property Name="ID_Unit" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="ValidFrom" Type="DateTime" Nullable="false" />
+          <Property Name="ValidTo" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="reldevicecredential">
+          <Key>
+            <PropertyRef Name="ID_Device" />
+            <PropertyRef Name="ID_Credential" />
+          </Key>
+          <Property Name="ID_Device" Type="Int32" Nullable="false" />
+          <Property Name="ID_Credential" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="relnetworkinterface">
+          <Key>
+            <PropertyRef Name="ID_RelNetworkinterface" />
+          </Key>
+          <Property Name="ID_RelNetworkinterface" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_NetworkinterfaceA" Type="Int32" Nullable="false" />
+          <Property Name="ID_NetworkinterfaceB" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="relnetworkinterfacevlan">
+          <Key>
+            <PropertyRef Name="ID_RelNetworkinterface" />
+            <PropertyRef Name="ID_VLAN" />
+          </Key>
+          <Property Name="ID_RelNetworkinterface" Type="Int32" Nullable="false" />
+          <Property Name="ID_VLAN" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="servicetype">
+          <Key>
+            <PropertyRef Name="ID_ServiceType" />
+          </Key>
+          <Property Name="ID_ServiceType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ValidFrom" Type="DateTime" Nullable="false" />
+          <Property Name="ValidTo" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="unit">
+          <Key>
+            <PropertyRef Name="ID_Unit" />
+          </Key>
+          <Property Name="ID_Unit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Abbreviation" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vlan">
+          <Key>
+            <PropertyRef Name="ID_Vlan" />
+          </Key>
+          <Property Name="ID_Vlan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Location" Type="Int32" Nullable="false" />
+          <Property Name="Identifier" Type="Int32" Nullable="false" />
+          <Property Name="RangeStartIP4" Type="Int64" />
+          <Property Name="RangeStartIP6" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="RangeLength6" Type="Int64" />
+        </EntityType>
+        <EntityType Name="wlanstandard">
+          <Key>
+            <PropertyRef Name="ID_WLANStandard" />
+          </Key>
+          <Property Name="ID_WLANStandard" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Designation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="v_usageperlocation">
+          <Key>
+            <PropertyRef Name="id_location" />
+            <PropertyRef Name="ID_DeviceType" />
+          </Key>
+          <Property Name="id_location" Type="Int32" Nullable="false" />
+          <Property Name="ID_DeviceType" Type="Int32" Nullable="false" />
+          <Property Name="Usage" Type="Decimal" />
+        </EntityType>
+        <EntityType Name="v_usageperpod">
+          <Key>
+            <PropertyRef Name="id_pod" />
+          </Key>
+          <Property Name="id_pod" Type="Int32" Nullable="false" />
+          <Property Name="Usage" Type="Decimal" />
+        </EntityType>
+        <EntityContainer Name="InventarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="address" EntityType="Self.address" />
+          <EntitySet Name="communication" EntityType="Self.communication" />
+          <EntitySet Name="communicationtype" EntityType="Self.communicationtype" />
+          <EntitySet Name="credential" EntityType="Self.credential" />
+          <EntitySet Name="customer" EntityType="Self.customer" />
+          <EntitySet Name="device" EntityType="Self.device" />
+          <EntitySet Name="devicecategory" EntityType="Self.devicecategory" />
+          <EntitySet Name="devicemachine" EntityType="Self.devicemachine" />
+          <EntitySet Name="deviceprinter" EntityType="Self.deviceprinter" />
+          <EntitySet Name="devicerouter" EntityType="Self.devicerouter" />
+          <EntitySet Name="deviceswitch" EntityType="Self.deviceswitch" />
+          <EntitySet Name="devicetype" EntityType="Self.devicetype" />
+          <EntitySet Name="devicewlanaccesspoint" EntityType="Self.devicewlanaccesspoint" />
+          <EntitySet Name="invoice" EntityType="Self.invoice" />
+          <EntitySet Name="invoiceposition" EntityType="Self.invoiceposition" />
+          <EntitySet Name="location" EntityType="Self.location" />
+          <EntitySet Name="log" EntityType="Self.log" />
+          <EntitySet Name="mediumtype" EntityType="Self.mediumtype" />
+          <EntitySet Name="networkinterface" EntityType="Self.networkinterface" />
+          <EntitySet Name="payment" EntityType="Self.payment" />
+          <EntitySet Name="person" EntityType="Self.person" />
+          <EntitySet Name="pod" EntityType="Self.pod" />
+          <EntitySet Name="rate" EntityType="Self.rate" />
+          <EntitySet Name="reldevicecredential" EntityType="Self.reldevicecredential" />
+          <EntitySet Name="relnetworkinterface" EntityType="Self.relnetworkinterface" />
+          <EntitySet Name="relnetworkinterfacevlan" EntityType="Self.relnetworkinterfacevlan" />
+          <EntitySet Name="servicetype" EntityType="Self.servicetype" />
+          <EntitySet Name="unit" EntityType="Self.unit" />
+          <EntitySet Name="vlan" EntityType="Self.vlan" />
+          <EntitySet Name="wlanstandard" EntityType="Self.wlanstandard" />
+          <EntitySet Name="v_usageperlocation" EntityType="Self.v_usageperlocation" />
+          <EntitySet Name="v_usageperpod" EntityType="Self.v_usageperpod" />
+          <FunctionImport Name="P_NightlyInvoicing" />
+          <FunctionImport Name="P_PodBill">
+          <Parameter Name="id_pod" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="v_invoices" EntityType="Model.v_invoices" />
+        </EntityContainer>
+        <EntityType Name="v_invoices">
+          <Key>
+            <PropertyRef Name="ID_Invoice" />
+            <PropertyRef Name="ID_Customer" />
+            <PropertyRef Name="Closed" />
+          </Key>
+          <Property Name="ID_Invoice" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceDate" Type="DateTime" />
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+          <Property Name="Closed" Type="Boolean" Nullable="false" />
+          <Property Name="BetragOhneGutschrift" Type="Decimal" />
+          <Property Name="BetragMitGutschrift" Type="Decimal" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="InventarEntities">
+          <EntitySetMapping Name="address">
+            <EntityTypeMapping TypeName="Model.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="Id_Address" ColumnName="Id_Address" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="Plz" ColumnName="Plz" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="IsoCountry" ColumnName="IsoCountry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communication">
+            <EntityTypeMapping TypeName="Model.communication">
+              <MappingFragment StoreEntitySet="communication">
+                <ScalarProperty Name="ID_Person" ColumnName="ID_Person" />
+                <ScalarProperty Name="ID_CommunicationType" ColumnName="ID_CommunicationType" />
+                <ScalarProperty Name="CommunicationDetail" ColumnName="CommunicationDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communicationtype">
+            <EntityTypeMapping TypeName="Model.communicationtype">
+              <MappingFragment StoreEntitySet="communicationtype">
+                <ScalarProperty Name="ID_CommunicationType" ColumnName="ID_CommunicationType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="credential">
+            <EntityTypeMapping TypeName="Model.credential">
+              <MappingFragment StoreEntitySet="credential">
+                <ScalarProperty Name="PrivilegeLevel" ColumnName="PrivilegeLevel" />
+                <ScalarProperty Name="ID_Credential" ColumnName="ID_Credential" />
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="SNMP_Community" ColumnName="SNMP_Community" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer">
+            <EntityTypeMapping TypeName="Model.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_InvoiceAddress" ColumnName="ID_InvoiceAddress" />
+                <ScalarProperty Name="ID_Address" ColumnName="ID_Address" />
+                <ScalarProperty Name="InvoiceThreshold" ColumnName="InvoiceThreshold" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="device">
+            <EntityTypeMapping TypeName="Model.device">
+              <MappingFragment StoreEntitySet="device">
+                <ScalarProperty Name="ID_Device" ColumnName="ID_Device" />
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="ID_Location" ColumnName="ID_Location" />
+                <ScalarProperty Name="Hostname" ColumnName="Hostname" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="IsPhysical" ColumnName="IsPhysical" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="devicecategory">
+            <EntityTypeMapping TypeName="Model.devicecategory">
+              <MappingFragment StoreEntitySet="devicecategory">
+                <ScalarProperty Name="Inactiv" ColumnName="Inactiv" />
+                <ScalarProperty Name="ID_DeviceCategory" ColumnName="ID_DeviceCategory" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="devicemachine">
+            <EntityTypeMapping TypeName="Model.devicemachine">
+              <MappingFragment StoreEntitySet="devicemachine">
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="Processors" ColumnName="Processors" />
+                <ScalarProperty Name="RAM" ColumnName="RAM" />
+                <ScalarProperty Name="StorageSize" ColumnName="StorageSize" />
+                <ScalarProperty Name="GPU" ColumnName="GPU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="deviceprinter">
+            <EntityTypeMapping TypeName="Model.deviceprinter">
+              <MappingFragment StoreEntitySet="deviceprinter">
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="resolution" ColumnName="resolution" />
+                <ScalarProperty Name="pagesPerMinute" ColumnName="pagesPerMinute" />
+                <ScalarProperty Name="isColorPrinter" ColumnName="isColorPrinter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="devicerouter">
+            <EntityTypeMapping TypeName="Model.devicerouter">
+              <MappingFragment StoreEntitySet="devicerouter">
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="deviceswitch">
+            <EntityTypeMapping TypeName="Model.deviceswitch">
+              <MappingFragment StoreEntitySet="deviceswitch">
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="isPoESupported" ColumnName="isPoESupported" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="devicetype">
+            <EntityTypeMapping TypeName="Model.devicetype">
+              <MappingFragment StoreEntitySet="devicetype">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID_MediumType" ColumnName="ID_MediumType" />
+                <ScalarProperty Name="ID_Rate" ColumnName="ID_Rate" />
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="ID_DeviceCategory" ColumnName="ID_DeviceCategory" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="ManufacturerNumber" ColumnName="ManufacturerNumber" />
+                <ScalarProperty Name="NumInterfaces" ColumnName="NumInterfaces" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="devicewlanaccesspoint">
+            <EntityTypeMapping TypeName="Model.devicewlanaccesspoint">
+              <MappingFragment StoreEntitySet="devicewlanaccesspoint">
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="ID_WLANStandard" ColumnName="ID_WLANStandard" />
+                <ScalarProperty Name="AntennaType" ColumnName="AntennaType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoice">
+            <EntityTypeMapping TypeName="Model.invoice">
+              <MappingFragment StoreEntitySet="invoice">
+                <ScalarProperty Name="ID_Invoice" ColumnName="ID_Invoice" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoiceposition">
+            <EntityTypeMapping TypeName="Model.invoiceposition">
+              <MappingFragment StoreEntitySet="invoiceposition">
+                <ScalarProperty Name="ID_InvoicePosition" ColumnName="ID_InvoicePosition" />
+                <ScalarProperty Name="ID_Invoice" ColumnName="ID_Invoice" />
+                <ScalarProperty Name="ID_ServiceType" ColumnName="ID_ServiceType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID_Networkinterface" ColumnName="ID_Networkinterface" />
+                <ScalarProperty Name="ID_Device" ColumnName="ID_Device" />
+                <ScalarProperty Name="ID_Location" ColumnName="ID_Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="location">
+            <EntityTypeMapping TypeName="Model.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID_Location" ColumnName="ID_Location" />
+                <ScalarProperty Name="ID_Pod" ColumnName="ID_Pod" />
+                <ScalarProperty Name="ID_Address" ColumnName="ID_Address" />
+                <ScalarProperty Name="ID_ParentLocation" ColumnName="ID_ParentLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log">
+            <EntityTypeMapping TypeName="Model.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="ID_Log" ColumnName="ID_Log" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ID_Device" ColumnName="ID_Device" />
+                <ScalarProperty Name="Acknowledged" ColumnName="Acknowledged" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mediumtype">
+            <EntityTypeMapping TypeName="Model.mediumtype">
+              <MappingFragment StoreEntitySet="mediumtype">
+                <ScalarProperty Name="Technology" ColumnName="Technology" />
+                <ScalarProperty Name="FullDuplex" ColumnName="FullDuplex" />
+                <ScalarProperty Name="Speed" ColumnName="Speed" />
+                <ScalarProperty Name="ID_MediumType" ColumnName="ID_MediumType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="networkinterface">
+            <EntityTypeMapping TypeName="Model.networkinterface">
+              <MappingFragment StoreEntitySet="networkinterface">
+                <ScalarProperty Name="IPv6_DefaultGateway" ColumnName="IPv6_DefaultGateway" />
+                <ScalarProperty Name="IPv4_DefaultGateway" ColumnName="IPv4_DefaultGateway" />
+                <ScalarProperty Name="IPv4_SubnetMask" ColumnName="IPv4_SubnetMask" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID_Networkinterface" ColumnName="ID_Networkinterface" />
+                <ScalarProperty Name="Physical" ColumnName="Physical" />
+                <ScalarProperty Name="IPv4_Address" ColumnName="IPv4_Address" />
+                <ScalarProperty Name="IPv6_Address" ColumnName="IPv6_Address" />
+                <ScalarProperty Name="ID_Device" ColumnName="ID_Device" />
+                <ScalarProperty Name="PortNr" ColumnName="PortNr" />
+                <ScalarProperty Name="ID_MediumType" ColumnName="ID_MediumType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment">
+            <EntityTypeMapping TypeName="Model.payment">
+              <MappingFragment StoreEntitySet="payment">
+                <ScalarProperty Name="ID_Payment" ColumnName="ID_Payment" />
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="person">
+            <EntityTypeMapping TypeName="Model.person">
+              <MappingFragment StoreEntitySet="person">
+                <ScalarProperty Name="ID_Person" ColumnName="ID_Person" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SurName" ColumnName="SurName" />
+                <ScalarProperty Name="ID_Address" ColumnName="ID_Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pod">
+            <EntityTypeMapping TypeName="Model.pod">
+              <MappingFragment StoreEntitySet="pod">
+                <ScalarProperty Name="SntpServer" ColumnName="SntpServer" />
+                <ScalarProperty Name="NameServer" ColumnName="NameServer" />
+                <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID_Pod" ColumnName="ID_Pod" />
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="ID_ContactPerson" ColumnName="ID_ContactPerson" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rate">
+            <EntityTypeMapping TypeName="Model.rate">
+              <MappingFragment StoreEntitySet="rate">
+                <ScalarProperty Name="ID_Rate" ColumnName="ID_Rate" />
+                <ScalarProperty Name="ID_ServiceType" ColumnName="ID_ServiceType" />
+                <ScalarProperty Name="ID_Unit" ColumnName="ID_Unit" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+                <ScalarProperty Name="ValidTo" ColumnName="ValidTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reldevicecredential">
+            <EntityTypeMapping TypeName="Model.reldevicecredential">
+              <MappingFragment StoreEntitySet="reldevicecredential">
+                <ScalarProperty Name="ID_Device" ColumnName="ID_Device" />
+                <ScalarProperty Name="ID_Credential" ColumnName="ID_Credential" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="relnetworkinterface">
+            <EntityTypeMapping TypeName="Model.relnetworkinterface">
+              <MappingFragment StoreEntitySet="relnetworkinterface">
+                <ScalarProperty Name="ID_RelNetworkinterface" ColumnName="ID_RelNetworkinterface" />
+                <ScalarProperty Name="ID_NetworkinterfaceA" ColumnName="ID_NetworkinterfaceA" />
+                <ScalarProperty Name="ID_NetworkinterfaceB" ColumnName="ID_NetworkinterfaceB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="relnetworkinterfacevlan">
+            <EntityTypeMapping TypeName="Model.relnetworkinterfacevlan">
+              <MappingFragment StoreEntitySet="relnetworkinterfacevlan">
+                <ScalarProperty Name="ID_RelNetworkinterface" ColumnName="ID_RelNetworkinterface" />
+                <ScalarProperty Name="ID_VLAN" ColumnName="ID_VLAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="servicetype">
+            <EntityTypeMapping TypeName="Model.servicetype">
+              <MappingFragment StoreEntitySet="servicetype">
+                <ScalarProperty Name="ID_ServiceType" ColumnName="ID_ServiceType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+                <ScalarProperty Name="ValidTo" ColumnName="ValidTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="unit">
+            <EntityTypeMapping TypeName="Model.unit">
+              <MappingFragment StoreEntitySet="unit">
+                <ScalarProperty Name="ID_Unit" ColumnName="ID_Unit" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vlan">
+            <EntityTypeMapping TypeName="Model.vlan">
+              <MappingFragment StoreEntitySet="vlan">
+                <ScalarProperty Name="ID_Vlan" ColumnName="ID_Vlan" />
+                <ScalarProperty Name="ID_Location" ColumnName="ID_Location" />
+                <ScalarProperty Name="Identifier" ColumnName="Identifier" />
+                <ScalarProperty Name="RangeStartIP4" ColumnName="RangeStartIP4" />
+                <ScalarProperty Name="RangeStartIP6" ColumnName="RangeStartIP6" />
+                <ScalarProperty Name="RangeLength6" ColumnName="RangeLength6" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wlanstandard">
+            <EntityTypeMapping TypeName="Model.wlanstandard">
+              <MappingFragment StoreEntitySet="wlanstandard">
+                <ScalarProperty Name="ID_WLANStandard" ColumnName="ID_WLANStandard" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_usageperlocation">
+            <EntityTypeMapping TypeName="Model.v_usageperlocation">
+              <MappingFragment StoreEntitySet="v_usageperlocation">
+                <ScalarProperty Name="id_location" ColumnName="id_location" />
+                <ScalarProperty Name="ID_DeviceType" ColumnName="ID_DeviceType" />
+                <ScalarProperty Name="Usage" ColumnName="Usage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_usageperpod">
+            <EntityTypeMapping TypeName="Model.v_usageperpod">
+              <MappingFragment StoreEntitySet="v_usageperpod">
+                <ScalarProperty Name="id_pod" ColumnName="id_pod" />
+                <ScalarProperty Name="Usage" ColumnName="Usage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="P_NightlyInvoicing" FunctionName="Model.Store.P_NightlyInvoicing" />
+          <FunctionImportMapping FunctionImportName="P_PodBill" FunctionName="Model.Store.P_PodBill" />
+          <EntitySetMapping Name="v_invoices">
+            <EntityTypeMapping TypeName="Model.v_invoices">
+              <MappingFragment StoreEntitySet="v_invoices">
+                <ScalarProperty Name="BetragMitGutschrift" ColumnName="BetragMitGutschrift" />
+                <ScalarProperty Name="BetragOhneGutschrift" ColumnName="BetragOhneGutschrift" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="ID_Invoice" ColumnName="ID_Invoice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

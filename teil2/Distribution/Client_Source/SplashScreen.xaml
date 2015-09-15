@@ -1,0 +1,22 @@
+﻿<Window x:Class="DBClient.SplashScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SplashScreen" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" AllowsTransparency="True"
+        
+        Background="#D0FFFFFF">
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Label FontSize="72" Content="Network Management"/>
+    <StackPanel Orientation="Horizontal">
+      <Label Content="server" Margin="3"/>
+      <TextBox Width="100" Margin="3" Text="{Binding Server}"/>
+      <Label Content="database" Margin="3" />
+      <TextBox Width="100" Margin="3" Text="{Binding Database}"/>
+
+      <Label Content="user" Margin="3"/>
+      <TextBox Width="100" Margin="3" Text="{Binding Username}"/>
+      <Label Content="password" Margin="3"/>
+      <PasswordBox Width="100" Margin="3" Name="passwd"/>
+      <Button Content="Login" Click="Button_Click" Margin="3"/>
+    </StackPanel>
+  </StackPanel>
+</Window>

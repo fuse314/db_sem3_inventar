@@ -1,0 +1,46 @@
+﻿<local:ViewBase x:Class="DBClient.Views.CustomerDetail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:DBClient.Views"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                xmlns:data="clr-namespace:DBClient.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  <local:ViewBase.Resources>
+    <Style TargetType="Label">
+      <Setter Property="Width" Value="200" />
+    </Style>
+    <Style TargetType="TextBox">
+      <Setter Property="Width" Value="200" />
+    </Style>
+  </local:ViewBase.Resources>
+  <Grid>
+    <DockPanel LastChildFill="True">
+      <StackPanel DockPanel.Dock="Top">
+        <StackPanel Orientation="Horizontal">
+          <Label>Kunde-Id</Label>
+          <TextBlock Text="{Binding ID_Customer}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <Label>Name</Label>
+          <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <Label>Mindestbetrag für Rechnung</Label>
+          <TextBox Text="{Binding InvoiceThreshold, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <Label HorizontalAlignment="Left">PODs</Label>
+      </StackPanel>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <dxg:GridControl Grid.Row="0" Name="tblPods" AutoGenerateColumns="AddNew" />
+        <dxg:GridControl Grid.Row="1" Name="tblRechnungen" AutoGenerateColumns="AddNew" MouseDoubleClick="tblRechnungen_MouseDoubleClick" />
+      </Grid>
+    </DockPanel>
+  </Grid>
+</local:ViewBase>

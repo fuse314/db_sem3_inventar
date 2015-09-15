@@ -1,0 +1,109 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:cols="clr-namespace:System.Collections;assembly=mscorlib"
+                    xmlns:local="clr-namespace:DBClient.Views"
+                    xmlns:model="clr-namespace:DBClient.Model">
+  
+  <local:TableDefinition x:Key="TABLE_CUSTOMER" Header="Kunden" DetailView="{x:Type local:CustomerDetail}">
+    <local:ColumnDefinition Header="Kunde-Id" FieldName="ID_Customer" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Name" FieldName="Name" AllowEditing="True"/>
+  </local:TableDefinition>
+  
+  <local:TableDefinition x:Key="TABLE_DEVICETYPE" Header="Gerätetypen">
+    <local:ColumnDefinition Header="Typ-Id" FieldName="ID_DeviceType" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Kategorie" FieldName="ID_DeviceCategory" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Hersteller" FieldName="Manufacturer" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Hest. Kennzeichen" FieldName="ManufacturerNumber" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Anzahl Interfaces" FieldName="NumInterfaces" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_DEVICECATEGORY" Header="Gerätekategorie">
+    <local:ColumnDefinition Header="Kategorie-Id" FieldName="ID_DeviceCategory" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Bezeichnung" FieldName="Description" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_COMMUNICATIONTYPE" Header="Kommunikationstyp">
+    <local:ColumnDefinition Header="Typ-Id" FieldName="ID_CommunicationType" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Bezeichnung" FieldName="Description" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_MEDIUMTYPE" Header="Medien">
+    <local:ColumnDefinition Header="Typ-Id" FieldName="ID_MediumType" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Bezeichnung" FieldName="Description" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_SERVICETYPE" Header="Dienstleistungen">
+    <local:ColumnDefinition Header="Typ-Id" FieldName="ID_ServiceType" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Bezeichnung" FieldName="Description" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Gültig von" FieldName="ValidFrom" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Gültig bis" FieldName="ValidTo" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_UNIT" Header="Einheiten">
+    <local:ColumnDefinition Header="Einheit-Id" FieldName="ID_Unit" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Bezeichnung" FieldName="Description" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Abkürzung" FieldName="Abbreviation" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_RATE" Header="Tarife">
+    <local:ColumnDefinition Header="Tarif-Id" FieldName="ID_Rate" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Dienstleistung" FieldName="ID_ServiceType" AllowEditing="True" 
+                            References="{x:Type model:servicetype}"/>
+    <local:ColumnDefinition Header="Einheit" FieldName="ID_Unit" AllowEditing="True"
+                            References="{x:Type model:unit}"/>
+    <local:ColumnDefinition Header="Preis" FieldName="Price" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Gültig von" FieldName="ValidFrom" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Gültig bis" FieldName="ValidTo" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_INVOICE" Header="Rechnungen">
+    <local:ColumnDefinition Header="Rechnung-Id" FieldName="ID_Invoice" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Datum" FieldName="InvoiceDate" AllowEditing="True" />
+    <local:ColumnDefinition Header="Kunde" FieldName="ID_Customer" AllowEditing="True"
+                            References="{x:Type model:customer}"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_INVOICEPOSITION" Header="Rechnungspositionen">
+    <local:ColumnDefinition Header="Position-Id" FieldName="ID_InvoicePosition" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Rechnung-Id" FieldName="ID_Invoice" AllowEditing="True" />
+    <local:ColumnDefinition Header="Dienstleistung" FieldName="ID_Service" AllowEditing="True"
+                            References="{x:Type model:servicetype}"/>
+    <local:ColumnDefinition Header="Anzahl" FieldName="Amount" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Preis" FieldName="Price" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Beschreibung" FieldName="Description" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Interface" FieldName="ID_Networkinterface" References="{x:Type model:networkinterface}" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Gerät" FieldName="ID_Device" References="{x:Type model:device}" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Standort" FieldName="ID_Location" References="{x:Type model:location}" AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_DEVICE" Header="Geräte">
+    <local:ColumnDefinition Header="Gerät-Id" FieldName="ID_Device" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Gerätetyp-Id" FieldName="ID_DeviceType" AllowEditing="True" />
+    <local:ColumnDefinition Header="Standort" FieldName="ID_Location" AllowEditing="True" References="{x:Type model:location}"/>
+    <local:ColumnDefinition Header="Hostname" FieldName="Hostname" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Serien-Nr" FieldName="SerialNumber" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Physikalisch" FieldName="IsPhysical" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Gültig von" FieldName="ValidFrom"
+                            AllowEditing="True" />
+    <local:ColumnDefinition Header="Gültig bis" FieldName="ValidTo"
+                            AllowEditing="True"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_LOCATION" Header="Standorte">
+    <local:ColumnDefinition Header="Standort-Id" FieldName="ID_Location" AllowEditing="False"/>
+    <local:ColumnDefinition Header="POD-Id" FieldName="ID_Pod" AllowEditing="True" References="{x:Type model:pod}" />
+    <local:ColumnDefinition Header="Bezeichnung" FieldName="Description" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Adresse" FieldName="ID_Address" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Übergeordneter Standort" FieldName="ID_ParentLocation" AllowEditing="True" References="{x:Type model:location}"/>
+  </local:TableDefinition>
+
+  <local:TableDefinition x:Key="TABLE_POD" Header="PODs">
+    <local:ColumnDefinition Header="POD-Id" FieldName="ID_Pod" AllowEditing="False"/>
+    <local:ColumnDefinition Header="Bezeichnung" FieldName="Description" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Kunde-Id" FieldName="ID_Customer" References="{x:Type model:customer}" AllowEditing="True" />
+    <local:ColumnDefinition Header="Kontaktperson" FieldName="ID_ContactPerson" AllowEditing="True"/>
+    <local:ColumnDefinition Header="Zeitzone" FieldName="TimeZone" AllowEditing="True" />
+  </local:TableDefinition>
+</ResourceDictionary>
