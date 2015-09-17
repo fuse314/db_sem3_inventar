@@ -1,13 +1,7 @@
 /* Datenbank  */
-/*
-drop database  if exists inventar;
-Create database inventar;
+-- Drop database  if exists inventar;
+Create database if not exists inventar;
 Use inventar;
-*/
-
-drop database  if exists test_ruel;
-Create database test_ruel;
-Use test_ruel;
 
 /* Tabellen */
 
@@ -321,14 +315,14 @@ Select
   ,dt.Description AS DeviceTypeDescription
   ,r.Price AS Price 
 From 
-  inventar.devicetype dt
-    join inventar.devicecategory dc 
+  devicetype dt
+    join devicecategory dc 
 	  on dt.ID_DeviceCategory = dc.ID_DeviceCategory and dc.Inactiv = 0
-	join inventar.mediumtype mt 
+	join mediumtype mt 
 	 on dt.ID_MediumType = mt.ID_MediumType
-	join inventar.networkinterface i 
+	join networkinterface i 
 	  on mt.ID_MediumType = i.ID_MediumType
-	join inventar.rate r 
+	join rate r 
 	  on dt.ID_Rate = r.ID_Rate
 Group by 
   dt.Manufacturer,dc.Description;
@@ -341,19 +335,19 @@ Select
  ,mt.Description AS mediumtype
  ,mt.Speed AS MaxSpeed 
 From 
-  inventar.networkinterface ni 
-    join inventar.device d 
+  networkinterface ni 
+    join device d 
       on d.ID_Device = ni.ID_Device 
-    join inventar.location l 
+    join location l 
       on l.ID_Location = d.ID_Location
-    join inventar.devicetype dt 
+    join devicetype dt 
       on dt.ID_DeviceType = d.ID_DeviceType 
-    join inventar.mediumtype mt 
+    join mediumtype mt 
       on mt.ID_MediumType = dt.ID_MediumType 
 Where 
   not exists(
     Select 'x' 
-	From inventar.relnetworkinterface rn 
+	From relnetworkinterface rn 
 	Where 
 	  rn.ID_NetworkinterfaceA = ni.ID_Networkinterface
 	  OR rn.ID_NetworkinterfaceB = ni.ID_Networkinterface
@@ -361,8 +355,8 @@ Where
 Order by 
   d.Hostname;
   
-  
-  DELIMITER $$
+/* BetragRechnungMitGutschrift_F */  
+DELIMITER $$
 CREATE FUNCTION BetragRechnungMitGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
 begin
 declare sumRechnungen decimal;
@@ -425,8 +419,8 @@ end$$
 DELIMITER ;
 
 
-  
-  /* v_invoice */
+ /* Sichten */
+ /* v_invoice */
 CREATE OR REPLACE VIEW v_invoices AS 
 Select 
   i.ID_Invoice AS ID_Invoice
@@ -458,19 +452,19 @@ From
 	  on a.Id_Address = loc.ID_Address 
 	join pod p 
 	  on loc.ID_Pod = p.ID_Pod 
-	join inventar.customer c 
+	join customer c 
 	  on p.ID_Customer = c.ID_Customer 
 Where 
   l.Acknowledged = 0;
 
 /*v_usageperlocation */
-CREATE or replace VIEW v_usageperlocation AS 
+CREATE OR REPLACE VIEW v_usageperlocation AS 
 select l.ID_Location AS id_location
 ,dt.ID_DeviceType AS ID_DeviceType
 ,ifnull(sum(ifnull((
   select count('x') 
   from 
-    inventar.networkinterface n 
+    networkinterface n 
     join relnetworkinterface rn on n.ID_Networkinterface = rn.ID_NetworkinterfaceA
     or n.ID_Networkinterface = rn.ID_NetworkinterfaceB 
   where 
@@ -481,7 +475,7 @@ from
 location l 
   join device d 
     on l.ID_Location = d.ID_Location 
-  join inventar.devicetype dt 
+  join devicetype dt 
     on d.ID_DeviceType = dt.ID_DeviceType 
  group by 
    dt.ID_DeviceType,l.ID_Location;
@@ -493,9 +487,139 @@ Select
   ,(sum(u.Usage) / count(u.Usage)) AS 'Usage' 
  From 
    v_usageperlocation u 
-     join inventar.location l 
+     join location l 
 	   on u.id_location = l.ID_Location
-	 join inventar.pod p 
+	 join pod p 
 	   on l.ID_Pod = p.ID_Pod 
 Group by 
   p.ID_Pod;
+
+
+/* Prozeduren */ 
+/* P_DeviceAdd */
+DELIMITER $$
+CREATE PROCEDURE P_DeviceAdd(in ID_Location int, in ID_DeviceType int, in NumDevice int)
+begin
+  declare DeviceCounter int default 0;
+  declare ID_Device int default 0;
+  declare InterfaceCounter int default 0;
+
+  WHILE DeviceCounter < NumDevice DO
+	
+    insert into device(ID_DeviceType, ID_Location)
+    values(ID_DeviceType, ID_Location);
+    
+    SET ID_Device =  LAST_INSERT_ID();
+    
+    set InterfaceCounter = (
+    select 
+      d.NumInterfaces
+	from
+      DeviceType d
+	where 
+      d.ID_DeviceType = ID_DeviceType);
+    
+    
+    WHILE InterfaceCounter > 0 DO
+    
+	  insert into Networkinterface(ID_Device, PortNr)
+      values(ID_Device, InterfaceCounter);
+	  SET InterfaceCounter = InterfaceCounter - 1;
+      
+    END WHILE;
+    
+    SET DeviceCounter = DeviceCounter + 1;
+  END WHILE;
+END $$
+DELIMITER ;
+
+/* P_LogClear */
+DELIMITER $$
+CREATE  PROCEDURE P_LogClear(in Id int)
+begin
+  if exists(select 'x' from Log where ID_Log = Id and Acknowledged = 0) then
+    update Log set Acknowledged = 1 where ID_Log = Id;
+  else
+    SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'Id not found or already acknowledged.';
+  end if;
+END $$
+DELIMITER ;
+
+/* P_LogMessageAdd */
+DELIMITER $$
+CREATE PROCEDURE P_LogMessageAdd(in ID_Pod int, in Hostname varchar(100), in Severity int, in Message varchar(1000))
+begin
+  declare ID_Device int;
+  Set ID_Device = null;
+  Select d.ID_Device into ID_Device
+	from Device d
+    join Location l on l.ID_Location = d.ID_Location
+    join POD p on p.ID_POD = l.ID_POD
+    where d.Hostname = Hostname
+    and p.ID_POD = ID_Pod;
+  if ID_Device is not null then
+	insert into Log(ID_Device,Severity,Message)
+		values (ID_Device,Severity,Message);
+  else
+	SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'Could not find Device with this Hostname and POD.';
+  END if;
+END $$
+DELIMITER ;
+
+/* P_NightlyInvoicing */
+DELIMITER $$
+CREATE PROCEDURE P_NightlyInvoicing()
+begin
+SET SQL_SAFE_UPDATES = 0;
+
+  update Invoice i
+    set InvoiceDate = CURDATE(),
+        Closed = 1
+    where (BetragRechnungOhneGutschrift_F(i.id_invoice) > 
+             (select ifnull(InvoiceThreshold, 5000) 
+             from Customer c where c.ID_Customer = i.ID_Customer))
+		OR (
+        (BetragRechnungOhneGutschrift_F(i.id_invoice) > 1000)
+             AND 30 = DAYOFMONTH(CURDATE())) and i.closed = 0;
+             
+             
+  insert into invoice(ID_Customer, InvoiceDate, Closed)
+  select ID_Customer, null, 0
+  from Customer c
+  where not exists(select 'x' from Invoice i where i.ID_Customer = c.ID_Customer and Closed = 0);
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE P_PodBill(id_pod int)
+begin
+declare id_invoice int;
+
+  if exists(
+    select 'x' 
+	from 
+	  invoiceposition ip 
+        join invoice i on ip.id_invoice = i.id_invoice
+        join location l on ip.id_location = l.id_location
+     where l.id_pod = id_pod and i.closed = 0) then
+  
+    insert into invoice(ID_Customer, InvoiceDate, Closed)
+      select c.ID_Customer, curdate(), 1
+      from Customer c
+      join pod p on c.id_customer = p.id_customer
+      where p.id_pod = id_pod;
+      
+	set id_invoice = LAST_INSERT_ID();
+
+	update invoiceposition ip 
+    join location l on l.id_location = ip.id_location
+    join invoice i on i.id_invoice = ip.id_invoice
+    set ip.id_invoice = id_invoice
+    where l.id_pod = id_pod and i.closed = 0;
+    
+  
+  end if;
+END $$
+DELIMITER ;
+
