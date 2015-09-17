@@ -334,15 +334,16 @@ Group by
   dt.Manufacturer,dc.Description;
   
 CREATE OR REPLACE VIEW v_freenetworkinterfaces AS 
- Select l.Description AS LocationName
+Select 
+  l.Description AS LocationName
  ,d.Hostname AS Hostname
  ,ni.PortNr AS PortNumber
  ,mt.Description AS mediumtype
  ,mt.Speed AS MaxSpeed 
- From 
-   inventar.networkinterface ni 
-     join inventar.device d 
-       on d.ID_Device = ni.ID_Device 
+From 
+  inventar.networkinterface ni 
+    join inventar.device d 
+      on d.ID_Device = ni.ID_Device 
     join inventar.location l 
       on l.ID_Location = d.ID_Location
     join inventar.devicetype dt 
@@ -359,3 +360,142 @@ Where
 	)
 Order by 
   d.Hostname;
+  
+  
+  DELIMITER $$
+CREATE FUNCTION BetragRechnungMitGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
+begin
+declare sumRechnungen decimal;
+declare sumPayments decimal;
+declare AmountAktuelleRechnung decimal;
+declare differenz decimal;
+declare result decimal;
+
+set AmountAktuelleRechnung = BetragRechnungOhneGutschrift_F(ID_Invoice);
+
+ select  ifnull(Sum(ifnull(ip.Price, ifnull(r.Price, 0)) * Amount), 0) into sumRechnungen
+		   from InvoicePosition ip
+		   join invoice i on ip.id_invoice = i.id_invoice
+           left join Rate r
+             on r.ID_ServiceType = ip.ID_ServiceType
+             and ValidFrom <= InvoiceDate and ifnull(ValidTo, '01.01.2050') <= InvoiceDate
+             
+		   where i.id_customer = (select i2.id_customer from invoice i2 where i2.id_invoice = ID_Invoice);
+
+select  
+  ifnull(sum(amount), 0) into sumPayments
+from 
+  payment p
+join customer c
+  on p.id_customer = c.id_customer
+join invoice i
+  on i.id_customer = c.id_customer
+  where i.id_invoice = ID_Invoice and p.PaymentDate <= i.InvoiceDate;
+
+set differenz = sumRechnungen - sumPayments;
+
+if differenz <= 0 then
+  set result = 0;
+elseif differenz < AmountAktuelleRechnung then
+  set result = differenz;
+else 
+  set result = differenz;
+end if;
+
+return result;
+end$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE FUNCTION BetragRechnungOhneGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
+begin
+declare sum decimal;
+declare curdate datetime;
+set curdate = curdate();
+ select  ifnull(Sum(ifnull(ip.Price, ifnull(r.Price, 0)) * Amount), 0) into sum
+		   from InvoicePosition ip
+           left join Rate r
+             on r.ID_ServiceType = ip.ID_ServiceType
+             and ValidFrom <= curdate and ifnull(ValidTo, curdate) <= curdate
+             
+		   where ip.ID_Invoice = ID_Invoice;
+           
+return sum;
+end$$
+DELIMITER ;
+
+
+  
+  /* v_invoice */
+CREATE OR REPLACE VIEW v_invoices AS 
+Select 
+  i.ID_Invoice AS ID_Invoice
+  ,i.InvoiceDate AS InvoiceDate
+  ,i.ID_Customer AS ID_Customer
+  ,i.Closed AS Closed
+  ,BetragRechnungOhneGutschrift_F(i.ID_Invoice) AS BetragOhneGutschrift
+  ,BetragRechnungMitGutschrift_F(i.ID_Invoice) AS BetragMitGutschrift 
+ From 
+   invoice i;
+
+/* v_logentries */
+CREATE OR REPLACE VIEW v_logentries AS 
+Select 
+  l.ID_Log AS id
+  ,p.Description AS pod
+  ,loc.Description AS location
+  ,d.Hostname AS hostname
+  ,l.Severity AS severity
+  ,l.CreatedAt AS timestamp
+  ,l.Message AS message 
+From 
+  log l 
+    join device d 
+	  on d.ID_Device = l.ID_Device 
+	join location loc 
+	  on d.ID_Location = loc.ID_Location
+	left join address a 
+	  on a.Id_Address = loc.ID_Address 
+	join pod p 
+	  on loc.ID_Pod = p.ID_Pod 
+	join inventar.customer c 
+	  on p.ID_Customer = c.ID_Customer 
+Where 
+  l.Acknowledged = 0;
+
+/*v_usageperlocation */
+CREATE or replace VIEW v_usageperlocation AS 
+select l.ID_Location AS id_location
+,dt.ID_DeviceType AS ID_DeviceType
+,ifnull(sum(ifnull((
+  select count('x') 
+  from 
+    inventar.networkinterface n 
+    join relnetworkinterface rn on n.ID_Networkinterface = rn.ID_NetworkinterfaceA
+    or n.ID_Networkinterface = rn.ID_NetworkinterfaceB 
+  where 
+    n.ID_Device = d.ID_Device
+  ),0)),0) / sum(ifnull(dt.NumInterfaces,0) * 100) AS 'Usage' 
+
+from 
+location l 
+  join device d 
+    on l.ID_Location = d.ID_Location 
+  join inventar.devicetype dt 
+    on d.ID_DeviceType = dt.ID_DeviceType 
+ group by 
+   dt.ID_DeviceType,l.ID_Location;
+
+/* v_usageperpod */
+CREATE OR REPLACE VIEW v_usageperpod AS 
+Select 
+  p.ID_Pod AS id_pod
+  ,(sum(u.Usage) / count(u.Usage)) AS 'Usage' 
+ From 
+   v_usageperlocation u 
+     join inventar.location l 
+	   on u.id_location = l.ID_Location
+	 join inventar.pod p 
+	   on l.ID_Pod = p.ID_Pod 
+Group by 
+  p.ID_Pod;
