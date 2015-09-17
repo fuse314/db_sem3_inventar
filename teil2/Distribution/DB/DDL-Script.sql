@@ -623,3 +623,5 @@ declare id_invoice int;
 END $$
 DELIMITER ;
 
+/* Events für autom. Fakturierung werden hier noch eingefügt */
+
