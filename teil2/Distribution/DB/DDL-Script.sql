@@ -35,8 +35,9 @@ Create Table if not exists address (
   ID_CommunicationType int(11) NOT NULL,
   CommunicationDetail varchar(80) NOT NULL,
   PRIMARY KEY (ID_Person, ID_CommunicationType),
-  FOREIGN KEY (ID_CommunicationType) REFERENCES communicationType(ID_CommunicationType)
-);
+  FOREIGN KEY (ID_CommunicationType) REFERENCES communicationType(ID_CommunicationType),
+  FOREIGN KEY (ID_Person) REFERENCES Person(ID_Person)
+  );
 
 CREATE TABLE if not exists customer (
   ID_Customer int(11) NOT NULL AUTO_INCREMENT,
@@ -58,13 +59,6 @@ CREATE TABLE if not exists credential (
   PrivilegeLevel int(11) NULL,
   PRIMARY KEY (ID_Credential),
   FOREIGN KEY (ID_Customer) REFERENCES customer(ID_Customer)
-);
-
-CREATE TABLE if not exists reldevicecredential (
-  ID_Device int(11) NOT NULL,
-  ID_Credential int(11) NOT NULL,
-  PRIMARY KEY (ID_Device,ID_Credential),
-  FOREIGN KEY (ID_Credential) REFERENCES credential(ID_Credential)
 );
 
 CREATE TABLE if not exists pod (
@@ -168,6 +162,14 @@ CREATE TABLE if not exists device (
   FOREIGN KEY (ID_Location) REFERENCES location(ID_Location),
   FOREIGN KEY (ID_DeviceType) REFERENCES deviceType(ID_DeviceType)
  );
+ 
+ CREATE TABLE if not exists reldevicecredential (
+  ID_Device int(11) NOT NULL,
+  ID_Credential int(11) NOT NULL,
+  PRIMARY KEY (ID_Device,ID_Credential),
+  FOREIGN KEY (ID_Credential) REFERENCES credential(ID_Credential),
+  FOREIGN KEY (ID_Device) REFERENCES device(ID_Device)
+);
  
  CREATE TABLE if not exists devicemachine (
   ID_Device int(11) NOT NULL DEFAULT '0',
@@ -317,13 +319,15 @@ Select
 From 
   devicetype dt
     join devicecategory dc 
-	  on dt.ID_DeviceCategory = dc.ID_DeviceCategory and dc.Inactiv = 0
+	  on dt.ID_DeviceCategory = dc.ID_DeviceCategory 
+	  and dc.Inactiv = 0
 	join mediumtype mt 
 	 on dt.ID_MediumType = mt.ID_MediumType
 	join networkinterface i 
 	  on mt.ID_MediumType = i.ID_MediumType
 	join rate r 
 	  on dt.ID_Rate = r.ID_Rate
+
 Group by 
   dt.Manufacturer,dc.Description;
   
@@ -623,5 +627,18 @@ declare id_invoice int;
 END $$
 DELIMITER ;
 
-/* Events für autom. Fakturierung werden hier noch eingefügt */
+/* Events für autom. Fakturierung */
+
+SET GLOBAL event_scheduler = ON;
+ 
+DELIMITER $$
+CREATE EVENT E_NightlyInvoicing
+  ON SCHEDULE
+    EVERY 1 DAY
+    STARTS '2000-01-01 23:00:00' ON COMPLETION PRESERVE ENABLE
+DO BEGIN
+CALL P_NightlyInvoicing();
+END$$
+DELIMITER ;
+
 
