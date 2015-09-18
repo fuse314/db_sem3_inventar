@@ -103,6 +103,7 @@ CREATE TABLE if not exists devicecategory (
   PRIMARY KEY (ID_DeviceCategory)
 );
 
+/* unit */
 CREATE TABLE if not exists unit (
   ID_Unit int(11) NOT NULL AUTO_INCREMENT,
   Description varchar(100) NOT NULL,
@@ -110,6 +111,7 @@ CREATE TABLE if not exists unit (
   PRIMARY KEY (ID_Unit)
 );
 
+/* servicetype */
 CREATE TABLE if not exists servicetype (
   ID_ServiceType int(11) NOT NULL AUTO_INCREMENT,
   Description varchar(100) NOT NULL,
@@ -118,12 +120,14 @@ CREATE TABLE if not exists servicetype (
   PRIMARY KEY (ID_ServiceType)
 );
 
+/* wlanstandard */
 CREATE TABLE if not exists wlanstandard (
   ID_WLANStandard int(11) NOT NULL AUTO_INCREMENT,
   Designation varchar(100) NULL,
   PRIMARY KEY (ID_WLANStandard)
 );
 
+/* rate */
 CREATE TABLE if not exists rate (
   ID_Rate int(11) NOT NULL AUTO_INCREMENT,
   ID_ServiceType int(11) NULL,
@@ -136,6 +140,7 @@ CREATE TABLE if not exists rate (
   FOREIGN KEY (ID_ServiceType) REFERENCES servicetype(ID_ServiceType)
 );
 
+/* mediumtype */
 CREATE TABLE if not exists mediumtype (
   ID_MediumType int(11) NOT NULL AUTO_INCREMENT,
   Description varchar(100) NOT NULL,
@@ -145,6 +150,7 @@ CREATE TABLE if not exists mediumtype (
   PRIMARY KEY (ID_MediumType)
 );
 
+/* devicetype */
 CREATE TABLE if not exists devicetype (
   ID_DeviceType int(11) NOT NULL AUTO_INCREMENT,
   ID_DeviceCategory int(11) NOT NULL,
@@ -160,6 +166,7 @@ CREATE TABLE if not exists devicetype (
   FOREIGN KEY (ID_MediumType) REFERENCES mediumtype(ID_MediumType)
 );
 
+/* device */
 CREATE TABLE if not exists device (
   ID_Device int(11) NOT NULL AUTO_INCREMENT,
   ID_DeviceType int(11) NOT NULL,
@@ -172,6 +179,7 @@ CREATE TABLE if not exists device (
   FOREIGN KEY (ID_DeviceType) REFERENCES deviceType(ID_DeviceType)
  );
  
+ /* reldevicecredential */
  CREATE TABLE if not exists reldevicecredential (
   ID_Device int(11) NOT NULL,
   ID_Credential int(11) NOT NULL,
@@ -179,7 +187,8 @@ CREATE TABLE if not exists device (
   FOREIGN KEY (ID_Credential) REFERENCES credential(ID_Credential),
   FOREIGN KEY (ID_Device) REFERENCES device(ID_Device)
 );
- 
+
+/* devicemachine */ 
  CREATE TABLE if not exists devicemachine (
   ID_Device int(11) NOT NULL DEFAULT '0',
   Processors varchar(100) NULL,
@@ -190,6 +199,7 @@ CREATE TABLE if not exists device (
   FOREIGN KEY (ID_Device) REFERENCES device(ID_Device)
 );
 
+/* deviceprinter */
 CREATE TABLE if not exists deviceprinter (
   ID_Device int(11) NOT NULL DEFAULT '0',
   resolution varchar(100) NULL,
@@ -199,6 +209,7 @@ CREATE TABLE if not exists deviceprinter (
   FOREIGN KEY (ID_Device) REFERENCES device(ID_Device)
 );
 
+/* devicerouter */
 CREATE TABLE if not exists devicerouter (
   ID_Device int(11) NOT NULL DEFAULT '0',
   Description varchar(100) NULL,
@@ -206,6 +217,7 @@ CREATE TABLE if not exists devicerouter (
   FOREIGN KEY (ID_Device) REFERENCES device(ID_Device)
 );
 
+/* deviceswitch */
 CREATE TABLE if not exists deviceswitch (
   ID_Device int(11) NOT NULL DEFAULT '0',
   isPoESupported tinyint(1) DEFAULT NULL,
@@ -213,6 +225,7 @@ CREATE TABLE if not exists deviceswitch (
   FOREIGN KEY (ID_Device) REFERENCES device(ID_Device)
 );
 
+/* devicewlanaccesspoint */
 CREATE TABLE if not exists devicewlanaccesspoint (
   ID_Device int(11) NOT NULL DEFAULT '0',
   ID_WLANStandard int(11) NULL,
@@ -222,6 +235,7 @@ CREATE TABLE if not exists devicewlanaccesspoint (
   FOREIGN KEY (ID_WLANStandard) REFERENCES wlanstandard(ID_WLANStandard)
 );
  
+ /* invoice */
  CREATE TABLE if not exists invoice (
   ID_Invoice int(11) NOT NULL AUTO_INCREMENT,
   InvoiceDate date NULL,
@@ -231,6 +245,7 @@ CREATE TABLE if not exists devicewlanaccesspoint (
   FOREIGN KEY (ID_Customer) REFERENCES customer(ID_Customer)
 );
 
+/* networkinterface */
 CREATE TABLE if not exists networkinterface (
   ID_Networkinterface int(11) NOT NULL AUTO_INCREMENT,
   Physical tinyint(1) NULL,
@@ -248,6 +263,7 @@ CREATE TABLE if not exists networkinterface (
   FOREIGN KEY (ID_MediumType) REFERENCES mediumtype(ID_MediumType)
 );
 
+/* relnetworkinterface */
 CREATE TABLE if not exists relnetworkinterface (
   ID_RelNetworkinterface int(11) NOT NULL AUTO_INCREMENT,
   ID_NetworkinterfaceA int(11) NOT NULL,
@@ -257,6 +273,7 @@ CREATE TABLE if not exists relnetworkinterface (
   FOREIGN KEY (ID_NetworkinterfaceB) REFERENCES networkinterface(ID_Networkinterface)
 );
 
+/* invoiceposition */
 CREATE TABLE if not exists invoiceposition (
   ID_InvoicePosition int(11) NOT NULL AUTO_INCREMENT,
   ID_Invoice int(11) NOT NULL,
@@ -275,6 +292,7 @@ CREATE TABLE if not exists invoiceposition (
   FOREIGN KEY (ID_Location) REFERENCES location(ID_Location)
 );
 
+/* log */
 CREATE TABLE if not exists log (
   ID_Log int(11) NOT NULL AUTO_INCREMENT,
   CreatedAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -286,6 +304,7 @@ CREATE TABLE if not exists log (
   FOREIGN KEY (ID_Device) REFERENCES device(ID_Device)
 );
 
+/* payment */
 CREATE TABLE if not exists payment (
   ID_Payment int(11) NOT NULL AUTO_INCREMENT,
   ID_Customer int(11) NOT NULL,
@@ -295,6 +314,7 @@ CREATE TABLE if not exists payment (
   FOREIGN KEY (ID_Customer) REFERENCES customer(ID_Customer)
 );
 
+/* vlan */
 CREATE TABLE if not exists vlan (
   ID_Vlan int(11) NOT NULL AUTO_INCREMENT,
   ID_Location int(11) NOT NULL,
@@ -306,6 +326,7 @@ CREATE TABLE if not exists vlan (
   FOREIGN KEY (ID_Location) REFERENCES location(ID_Location)
 );
 
+/* relnetworkinterfacevlan */
 CREATE TABLE if not exists relnetworkinterfacevlan (
   ID_RelNetworkinterface int(11) NOT NULL,
   ID_VLAN int(11) NOT NULL,
@@ -315,8 +336,9 @@ CREATE TABLE if not exists relnetworkinterfacevlan (
 );
 
 
-/* Views */
+/* Views und Functions */
 
+/* v_devicecatalog */
 CREATE OR REPLACE VIEW v_devicecatalog AS 
 Select 
   dt.Manufacturer AS Manufacturer
@@ -341,6 +363,7 @@ From
 Group by 
   dt.Manufacturer,dc.Description;
   
+  /* v_freenetworkinterfaces */
 CREATE OR REPLACE VIEW v_freenetworkinterfaces AS 
 Select 
   l.Description AS LocationName
@@ -368,7 +391,7 @@ Where
 	)
 Order by 
   d.Hostname;
-  
+ 
 /* BetragRechnungMitGutschrift_F */  
 DELIMITER $$
 CREATE FUNCTION BetragRechnungMitGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
@@ -414,6 +437,7 @@ return result;
 end$$
 DELIMITER ;
 
+/* BetragRechnungOhneGutschrift_F */
 DELIMITER $$
 CREATE FUNCTION BetragRechnungOhneGutschrift_F(ID_Invoice int) RETURNS decimal(10,0)
 begin
@@ -433,7 +457,6 @@ end$$
 DELIMITER ;
 
 
- /* Sichten */
  /* v_invoice */
 CREATE OR REPLACE VIEW v_invoices AS 
 Select 
@@ -604,7 +627,7 @@ SET SQL_SAFE_UPDATES = 0;
 END $$
 DELIMITER ;
 
-
+/* P_PodBill */
 DELIMITER $$
 CREATE PROCEDURE P_PodBill(id_pod int)
 begin
@@ -638,7 +661,7 @@ END $$
 DELIMITER ;
 
 /* Events für autom. Fakturierung */
-
+/* Event E_NightlyInvoicing */
 SET GLOBAL event_scheduler = ON;
  
 DELIMITER $$
@@ -650,5 +673,3 @@ DO BEGIN
 CALL P_NightlyInvoicing();
 END$$
 DELIMITER ;
-
-
