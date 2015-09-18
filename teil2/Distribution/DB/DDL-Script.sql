@@ -344,7 +344,8 @@ Select
   dt.Manufacturer AS Manufacturer
   ,dc.Description AS TypeDescription
   ,dt.NumInterfaces AS NumInterfaces
-  ,mt.Speed AS Speed,mt.FullDuplex AS FullDuplex
+  ,mt.Speed AS Speed
+  ,mt.FullDuplex AS FullDuplex
   ,mt.Description AS MediumTypeDescription
   ,dt.Description AS DeviceTypeDescription
   ,r.Price AS Price 
@@ -496,9 +497,11 @@ Where
 
 /*v_usageperlocation */
 CREATE OR REPLACE VIEW v_usageperlocation AS 
-select l.ID_Location AS id_location
-,dt.ID_DeviceType AS ID_DeviceType
-,ifnull(sum(ifnull((
+Select 
+  l.ID_Location AS id_location
+  ,dt.ID_DeviceType AS ID_DeviceType
+  
+  ,ifnull(sum(ifnull((
   select count('x') 
   from 
     networkinterface n 
@@ -508,13 +511,13 @@ select l.ID_Location AS id_location
     n.ID_Device = d.ID_Device
   ),0)),0) / sum(ifnull(dt.NumInterfaces,0) * 100) AS 'Usage' 
 
-from 
+From 
 location l 
   join device d 
     on l.ID_Location = d.ID_Location 
   join devicetype dt 
     on d.ID_DeviceType = dt.ID_DeviceType 
- group by 
+ Group by 
    dt.ID_DeviceType,l.ID_Location;
 
 /* v_usageperpod */
