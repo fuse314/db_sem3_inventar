@@ -5,6 +5,7 @@ Use inventar;
 
 /* Tabellen */
 
+/* address */
 Create Table if not exists address (
   Id_Address int(11) NOT NULL AUTO_INCREMENT,
   Street varchar(100) NULL,
@@ -15,6 +16,7 @@ Create Table if not exists address (
   PRIMARY KEY (Id_Address)
 );
   
+  /* person */
   CREATE TABLE if not exists person (
   ID_Person int(11) NOT NULL AUTO_INCREMENT,
   FirstName varchar(100) NULL,
@@ -23,13 +25,15 @@ Create Table if not exists address (
   PRIMARY KEY (ID_Person),
   FOREIGN KEY (ID_Address) REFERENCES address(ID_Address)
  );
-
+ 
+/* communicationtype */
   CREATE TABLE if not exists communicationtype (
   ID_CommunicationType int(11) NOT NULL AUTO_INCREMENT,
   Description varchar(50) NOT NULL,
   PRIMARY KEY (ID_CommunicationType)
 );
   
+  /* communication */
   CREATE TABLE if not exists communication (
   ID_Person int(11) NOT NULL,
   ID_CommunicationType int(11) NOT NULL,
@@ -39,6 +43,7 @@ Create Table if not exists address (
   FOREIGN KEY (ID_Person) REFERENCES Person(ID_Person)
   );
 
+  /* customer */
 CREATE TABLE if not exists customer (
   ID_Customer int(11) NOT NULL AUTO_INCREMENT,
   Name varchar(100) NULL,
@@ -301,7 +306,8 @@ CREATE TABLE if not exists relnetworkinterfacevlan (
   ID_RelNetworkinterface int(11) NOT NULL,
   ID_VLAN int(11) NOT NULL,
   PRIMARY KEY (ID_RelNetworkinterface, ID_VLAN),
-  FOREIGN KEY (ID_VLAN) REFERENCES vlan(ID_VLAN)
+  FOREIGN KEY (ID_VLAN) REFERENCES vlan(ID_VLAN),
+  FOREIGN KEY (ID_RelNetworkinterface) REFERENCES relnetworkinterface(ID_RelNetworkinterface)
 );
 
 
