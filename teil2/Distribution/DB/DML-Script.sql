@@ -40,6 +40,14 @@ VALUES
 (10,'Rechnungsstrasse','10','9000','St. Gallen','CH'),
 (11,'Lafayette Street','200','10003','New York','US');
 
+INSERT INTO person 
+VALUES 
+(1,'Elias','Schwarz',1),
+(2,'Nadine','Müller',2),
+(3,'Peter','Mittelholzer',3),
+(4,'Melanie','Egger',4),
+(10,'Gottfried','Mayer',10);
+
 INSERT INTO communicationtype 
 VALUES 
 (1,'Direct Phone'),
@@ -66,14 +74,6 @@ INSERT INTO credential VALUES
 (2,1,'melanie.mueller','asdf','dsafewr234',NULL),
 (3,1,'hans.eberle','1234','234sa4dasf',NULL),
 (4,1,'marcel.signer','','234sdfawer',NULL);
-
-INSERT INTO person 
-VALUES 
-(1,'Elias','Schwarz',1),
-(2,'Nadine','Müller',2),
-(3,'Peter','Mittelholzer',3),
-(4,'Melanie','Egger',4),
-(10,'Gottfried','Mayer',10);
 
 INSERT INTO pod VALUES 
 (1,1,10,'Europe/Zurich','PodEins',NULL,NULL,NULL),
