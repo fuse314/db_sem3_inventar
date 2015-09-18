@@ -55,6 +55,7 @@ CREATE TABLE if not exists customer (
   FOREIGN KEY (ID_Address) REFERENCES address(ID_Address)
 );
 
+/* credential */
 CREATE TABLE if not exists credential (
   ID_Credential int(11) NOT NULL AUTO_INCREMENT,
   ID_Customer int(11) NOT NULL,
@@ -66,6 +67,7 @@ CREATE TABLE if not exists credential (
   FOREIGN KEY (ID_Customer) REFERENCES customer(ID_Customer)
 );
 
+/* pod */
 CREATE TABLE if not exists pod (
   ID_Pod int(11) NOT NULL AUTO_INCREMENT,
   ID_Customer int(11) NOT NULL,
@@ -80,6 +82,7 @@ CREATE TABLE if not exists pod (
   FOREIGN KEY (ID_ContactPerson) REFERENCES person(ID_Person)
 );
 
+/* location */
 CREATE TABLE if not exists location (
   ID_Location int(11) NOT NULL AUTO_INCREMENT,
   ID_Pod int(11) NOT NULL,
@@ -92,6 +95,7 @@ CREATE TABLE if not exists location (
   FOREIGN KEY (ID_ParentLocation) REFERENCES location(ID_Location)
 ); 
 
+/* devicecategory */
 CREATE TABLE if not exists devicecategory (
   ID_DeviceCategory int(11) NOT NULL AUTO_INCREMENT,
   Description varchar(100) NULL,
